@@ -7,8 +7,8 @@ type PillAdderProps = PropsWithChildren<{
   }>;
 
 const PillAdder = ({addPill}: PillAdderProps) => {
-    const [name, setName] = useState("")
-    const [dosage, setDosage] = useState(0)
+    const [name, setName] = useState("Rogain")
+    const [dosage, setDosage] = useState(5)
     const [unit, setUnit] = useState("mg")
     return (
         <View>

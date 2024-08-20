@@ -59,6 +59,16 @@ function App(): React.JSX.Element {
     setPillAdderOpen(false)
   }
 
+  const takePill = (pill: Pill) => {
+    const pillSwallow = {
+      pill: pill,
+      date: new Date()
+    }
+    const oldPillHistory = pillHistory
+    const newPillHitory = oldPillHistory.concat([pillSwallow])
+    setPillHistory(newPillHitory)
+  }
+
   return (
     <SafeAreaView style={styles.app}>
       <TouchableHighlight style={[styles.box, styles.one]} onPress={() => setPillAdderOpen(true)}><Text style={styles.boxText}>Add a Pill</Text></TouchableHighlight>
@@ -72,6 +82,8 @@ function App(): React.JSX.Element {
       </PillModal>
       <PillModal isVisible={pillTakerOpen} closeWindow={() => setPillTakerOpen(false)} name={"Take a Pill"}>
         <PillTaker
+          pills={pills}
+          takePill={(pill: Pill) => takePill(pill)}
         />
       </PillModal>
       <PillModal isVisible={pillManagerOpen} closeWindow={() => setPillManagerOpen(false)} name={"Manage Pills"}>
@@ -81,6 +93,7 @@ function App(): React.JSX.Element {
       </PillModal>
       <PillModal isVisible={pillHistoryOpen} closeWindow={() => setPillHistoryOpen(false)} name={"Pill History"}>
         <PillHistory
+          pillHistory={pillHistory}
         />
       </PillModal>
     </SafeAreaView>

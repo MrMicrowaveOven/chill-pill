@@ -13,12 +13,11 @@ type PillManagerProps = PropsWithChildren<{
   }>;
 
 const PillManager = ({pills}: PillManagerProps) => {
-    console.log(pills)
     return (
         <View style={styles.window}>
             <ScrollView>
                 {pills.map((pill, index) => {
-                    return(<Text style={styles.pill}>{pill.name}: {pill.dosage}{pill.unit}</Text>)
+                    return(<Text key={index} style={styles.pill}>{pill.name}: {pill.dosage}{pill.unit}</Text>)
                 })}
             </ScrollView>
         </View>
