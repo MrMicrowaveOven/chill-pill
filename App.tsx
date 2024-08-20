@@ -5,21 +5,41 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  Button,
   SafeAreaView,
   StyleSheet,
 } from 'react-native';
-
+import PillAdder from './components/PillAdder'
+// import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
+// const storage = new MMKVLoader().initialize();
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
+type Pill = {
+  name: string;
+  dosage: number;
+  unit: string;
+}
+
 function App(): React.JSX.Element {
+  // const [pills, setPills] = useMMKVStorage<Pill[]>('pills', storage, [])
+  const [pills, setPills] = useState([])
+  const [pillAdderOpen, setPillAdderOpen] = useState(false)
   return (
     <SafeAreaView style={styles.app}>
+      <Button title="Add Pill" onPress={() => setPillAdderOpen(!pillAdderOpen)}>
+
+      </Button>
+      <PillAdder
+        isVisible={pillAdderOpen}
+        addPill={(name: string, dosage: number, unit: string) => console.log(name, dosage, unit)}
+        closeWindow={() => setPillAdderOpen(false)}
+      />
     </SafeAreaView>
   );
 }
