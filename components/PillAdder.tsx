@@ -21,13 +21,12 @@ const PillAdder = ({addPill}: PillAdderProps) => {
                 </View>
                 <View style={styles.input}>
                     <Text style={styles.inputLabel}>Dosage</Text>
-                    <View style={styles.inputTextBorder}>
-                        <TextInput style={styles.inputText} onChangeText={(dosage) => setDosage(parseFloat(dosage))} keyboardType='numeric'></TextInput>
+                    <View style={styles.inputDosage}>
+                        <View style={[styles.inputTextBorder, styles.inputDosageBorder]}>
+                            <TextInput style={styles.inputText} onChangeText={(dosage) => setDosage(parseFloat(dosage))} keyboardType='numeric'></TextInput>
+                        </View>
+                        <Text style={styles.mgDisplay}>mg</Text>
                     </View>
-                </View>
-                <View style={styles.input}>
-                    <Text style={styles.inputLabel}>Unit</Text>
-                    <Text style={styles.inputText}>mg</Text>
                 </View>
             </View>
             <View style={styles.addPillButton}>
@@ -56,6 +55,19 @@ const styles = StyleSheet.create({
         borderColor: "black",
         borderWidth: 1,
         borderStyle: "solid",
+    },
+    inputDosage: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    inputDosageBorder: {
+        width: "50%",
+    },
+    mgDisplay: {
+        fontSize: 30,
+        color: "black",
+        margin: 5
     },
     addPillButton: {
         position: "absolute",
