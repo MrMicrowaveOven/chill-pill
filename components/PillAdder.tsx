@@ -3,74 +3,41 @@ import { Button, Modal, StyleSheet, Text, TextInput, TouchableWithoutFeedback, V
 import type {PropsWithChildren} from 'react';
 
 type PillAdderProps = PropsWithChildren<{
-    isVisible: boolean;
     addPill: Function;
-    closeWindow: Function;
   }>;
 
-const PillAdder = ({isVisible, addPill, closeWindow}: PillAdderProps) => {
+const PillAdder = ({addPill}: PillAdderProps) => {
     const [name, setName] = useState("")
     const [dosage, setDosage] = useState(0)
     const [unit, setUnit] = useState("mg")
     return (
-        <Modal visible={isVisible} animationType="slide" transparent={true}>
-            <View style={styles.modal}>
-                <View style={styles.window}>
-                    <TouchableWithoutFeedback onPress={() => closeWindow()}>
-                        <View style={styles.exitButton}>
-                            <Text style={styles.exitButtonText}>X</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <View style={styles.addPillForm}>
-                        <View style={styles.input}>
-                            <Text style={styles.inputLabel}>Name of Medication</Text>
-                            <TextInput style={styles.inputText} onChangeText={(name) => setName(name)}></TextInput>
-                        </View>
-                        <View style={styles.input}>
-                            <Text style={styles.inputLabel}>Dosage</Text>
-                            <TextInput style={styles.inputText} onChangeText={(dosage) => setDosage(parseFloat(dosage))} keyboardType='numeric'></TextInput>
-                        </View>
-                        <View style={styles.input}>
-                            <Text style={styles.inputLabel}>Unit</Text>
-                            <Text>mg</Text>
-                        </View>
-                    </View>
-                    <View style={styles.addPillButton}>
-                        <Button title="Add Pill" onPress={() => addPill(name, dosage, unit)}></Button>
+        <View>
+            <View style={styles.addPillForm}>
+                <View style={styles.input}>
+                    <Text style={styles.inputLabel}>Name of Medication</Text>
+                    <View style={styles.inputTextBorder}>
+                        <TextInput style={styles.inputText} onChangeText={(name) => setName(name)}></TextInput>
                     </View>
                 </View>
+                <View style={styles.input}>
+                    <Text style={styles.inputLabel}>Dosage</Text>
+                    <View style={styles.inputTextBorder}>
+                        <TextInput style={styles.inputText} onChangeText={(dosage) => setDosage(parseFloat(dosage))} keyboardType='numeric'></TextInput>
+                    </View>
+                </View>
+                <View style={styles.input}>
+                    <Text style={styles.inputLabel}>Unit</Text>
+                    <Text style={styles.inputText}>mg</Text>
+                </View>
             </View>
-
-        </Modal>
+            <View style={styles.addPillButton}>
+                <Button title="Add Pill" onPress={() => addPill(name, dosage, unit)}></Button>
+            </View>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
-    modal: {
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    window: {
-        width: "80%",
-        height: "80%",
-        borderColor: "black",
-        borderWidth: 3,
-        borderStyle: "solid",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    exitButton: {
-        position: "absolute",
-        top: 0,
-        right: 5
-    },
-    exitButtonText: {
-        fontSize: 30,
-        fontWeight: "900"
-    },
     addPillForm: {
         width: "80%",
         height: "80%",
@@ -79,10 +46,16 @@ const styles = StyleSheet.create({
 
     },
     inputLabel: {
-        color: "black"
+        color: "black",
+        fontSize: 30,
     },
     inputText: {
-
+        fontSize: 30,
+    },
+    inputTextBorder: {
+        borderColor: "black",
+        borderWidth: 1,
+        borderStyle: "solid",
     },
     addPillButton: {
         position: "absolute",
@@ -92,7 +65,6 @@ const styles = StyleSheet.create({
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
-
     }
 })
 
