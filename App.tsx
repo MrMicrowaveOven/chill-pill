@@ -15,11 +15,11 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import PillAdder from './components/PillAdder'
-import PillTaker from './components/PillTaker'
-import PillManager from './components/PillManager'
-import PillHistory from './components/PillHistory'
-import PillModal from './components/PillModal';
+import PillAdder from './public/components/PillAdder'
+import PillTaker from './public/components/PillTaker'
+import PillManager from './public/components/PillManager'
+import PillHistory from './public/components/PillHistory'
+import PillModal from './public/components/PillModal';
 // import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 // const storage = new MMKVLoader().initialize();
 

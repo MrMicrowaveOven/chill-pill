@@ -21,7 +21,7 @@ const PillManager = ({pills, deletePill}: PillManagerProps) => {
                     return(
                         <View style={styles.pill}>
                             <TouchableOpacity style={styles.deleteIconButton} onPress={() => deletePill(index)}>
-                                <Image style={styles.deleteIcon} source={require("../public/images/delete.png")}/>
+                                <Image style={styles.deleteIcon} source={require("../images/delete.png")}/>
                             </TouchableOpacity>
                             <Text key={index} style={styles.pillText}>{pill.name}: {pill.dosage}{pill.unit}</Text>
                         </View>
