@@ -11,6 +11,8 @@ import {
   Button,
   SafeAreaView,
   StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 import PillAdder from './components/PillAdder'
 // import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
@@ -28,16 +30,32 @@ type Pill = {
 
 function App(): React.JSX.Element {
   // const [pills, setPills] = useMMKVStorage<Pill[]>('pills', storage, [])
-  const [pills, setPills] = useState([])
+  const [pills, setPills] = useState<Pill[]>([])
   const [pillAdderOpen, setPillAdderOpen] = useState(false)
+
+  const addPill = (name: string, dosage : number, unit : string) => {
+    const pill = {
+      name: name,
+      dosage: dosage,
+      unit: unit
+    }
+    const oldPills = pills
+    const newPills = oldPills.concat([pill])
+    setPills(newPills)
+  }
+
   return (
     <SafeAreaView style={styles.app}>
       <Button title="Add Pill" onPress={() => setPillAdderOpen(!pillAdderOpen)}>
-
       </Button>
+      <View style={styles.pillHistory}>
+        {pills.map((pill) => {
+          return <Text>{pill.name}, {pill.dosage}, {pill.unit}</Text>
+        })}
+      </View>
       <PillAdder
         isVisible={pillAdderOpen}
-        addPill={(name: string, dosage: number, unit: string) => console.log(name, dosage, unit)}
+        addPill={(name: string, dosage: number, unit: string) => addPill(name, dosage, unit)}
         closeWindow={() => setPillAdderOpen(false)}
       />
     </SafeAreaView>
@@ -49,22 +67,9 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+  pillHistory: {
+
+  }
 });
 
 export default App;

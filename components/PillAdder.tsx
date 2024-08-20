@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Button, Modal, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 import type {PropsWithChildren} from 'react';
 
 type PillAdderProps = PropsWithChildren<{
@@ -13,7 +13,7 @@ const PillAdder = ({isVisible, addPill, closeWindow}: PillAdderProps) => {
     const [dosage, setDosage] = useState(0)
     const [unit, setUnit] = useState("mg")
     return (
-        <Modal visible={isVisible}>
+        <Modal visible={isVisible} animationType="slide" transparent={true}>
             <View style={styles.modal}>
                 <View style={styles.window}>
                     <TouchableWithoutFeedback onPress={() => closeWindow()}>
@@ -21,6 +21,20 @@ const PillAdder = ({isVisible, addPill, closeWindow}: PillAdderProps) => {
                             <Text style={styles.exitButtonText}>X</Text>
                         </View>
                     </TouchableWithoutFeedback>
+                    <View style={styles.addPillForm}>
+                        <View style={styles.input}>
+                            <Text style={styles.inputLabel}>Name of Medication</Text>
+                            <TextInput style={styles.inputText} onChangeText={(name) => setName(name)}></TextInput>
+                        </View>
+                        <View style={styles.input}>
+                            <Text style={styles.inputLabel}>Dosage</Text>
+                            <TextInput style={styles.inputText} onChangeText={(dosage) => setDosage(parseFloat(dosage))} keyboardType='numeric'></TextInput>
+                        </View>
+                        <View style={styles.input}>
+                            <Text style={styles.inputLabel}>Unit</Text>
+                            <Text>mg</Text>
+                        </View>
+                    </View>
                     <View style={styles.addPillButton}>
                         <Button title="Add Pill" onPress={() => addPill(name, dosage, unit)}></Button>
                     </View>
@@ -42,7 +56,11 @@ const styles = StyleSheet.create({
     window: {
         width: "80%",
         height: "80%",
-        backgroundColor: "red"
+        borderColor: "black",
+        borderWidth: 3,
+        borderStyle: "solid",
+        justifyContent: "center",
+        alignItems: "center"
     },
     exitButton: {
         position: "absolute",
@@ -53,12 +71,28 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "900"
     },
+    addPillForm: {
+        width: "80%",
+        height: "80%",
+    },
+    input: {
+
+    },
+    inputLabel: {
+        color: "black"
+    },
+    inputText: {
+
+    },
     addPillButton: {
         position: "absolute",
         bottom: 10,
         left: 0,
         right: 0,
-        width: "50%"
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+
     }
 })
 
