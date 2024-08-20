@@ -69,6 +69,12 @@ function App(): React.JSX.Element {
     setPillHistory(newPillHitory)
   }
 
+  const deletePill = (indexToDelete: number) => {
+    const oldPills = pills
+    const newPills = oldPills.filter((pill, index) => index !== indexToDelete)
+    setPills(newPills)
+  }
+
   return (
     <SafeAreaView style={styles.app}>
       <TouchableHighlight style={[styles.box, styles.one]} onPress={() => setPillAdderOpen(true)}><Text style={styles.boxText}>Add a Pill</Text></TouchableHighlight>
@@ -89,6 +95,7 @@ function App(): React.JSX.Element {
       <PillModal isVisible={pillManagerOpen} closeWindow={() => setPillManagerOpen(false)} name={"Manage Pills"}>
         <PillManager
           pills={pills}
+          deletePill={(index: number) => deletePill(index)}
         />
       </PillModal>
       <PillModal isVisible={pillHistoryOpen} closeWindow={() => setPillHistoryOpen(false)} name={"Pill History"}>
