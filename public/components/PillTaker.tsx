@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, StyleSheet, Text, View } from "react-native";
+import { Button, Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import type {PropsWithChildren} from 'react';
 import DropDownPicker from "react-native-dropdown-picker";
 
@@ -36,6 +36,12 @@ const PillTaker = ({pills, takePill}: PillTakerProps) => {
         const oldSession = pillSession
         let newSession = oldSession.concat([{pill: pill, quantity: quantity}])
         // newSession = simplifySession(newSession)
+        setPillSession(newSession)
+    }
+
+    const deletePillFromSession = (indexToDelete: number) => {
+        const oldSession = pillSession
+        let newSession = oldSession.filter((el, index) => index !== indexToDelete)
         setPillSession(newSession)
     }
 
@@ -108,7 +114,14 @@ const PillTaker = ({pills, takePill}: PillTakerProps) => {
             <Button title="Add Pill" onPress={() => addPillsToSession(pills[value], valueQ)}/>
             <View style={styles.pillSession}>
                 {pillSession.map((dose, index) => {
-                    return <Text style={styles.sessionDose} key={index}>{dose.pill.name}: {dose.pill.dosage}{dose.pill.unit} X {dose.quantity}</Text>
+                    return (
+                        <View style={styles.sessionDose}>
+                            <TouchableOpacity style={styles.deleteIconButton} onPress={() => deletePillFromSession(index)}>
+                                <Image style={styles.deleteIcon} source={require("../images/delete.png")}/>
+                            </TouchableOpacity>
+                            <Text style={styles.sessionDoseText} key={index}>{dose.pill.name}: {dose.pill.dosage}{dose.pill.unit} X {dose.quantity}</Text>
+                        </View>
+                    )
                 })}
             </View>
             <View style={styles.takePillsButton}>
@@ -147,10 +160,28 @@ const styles = StyleSheet.create({
     },
     pillSession: {
         height: "40%",
+        margin: 10,
     },
     sessionDose: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    sessionDoseText: {
         fontSize: 20,
         color: "black"
+    },
+    deleteIcon: {
+        width: 20,
+        height: 20,
+    },
+    deleteIconButton: {
+        width: 20,
+        height: 20,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: 15
     },
     takePillsButton: {
         position: "absolute",
