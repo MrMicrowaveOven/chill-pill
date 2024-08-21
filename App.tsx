@@ -34,8 +34,18 @@ type Pill = {
 }
 
 type PillSwallow = {
-  pill: Pill,
+  dose: Dose;
   date: Date;
+}
+
+type SessionDate = {
+  date: Date;
+  session: Dose[];
+}
+
+type Dose = {
+  pill: Pill;
+  quantity: number;
 }
 
 function App(): React.JSX.Element {
@@ -45,7 +55,7 @@ function App(): React.JSX.Element {
   const [pillManagerOpen, setPillManagerOpen] = useState(false)
   const [pillTakerOpen, setPillTakerOpen] = useState(false)
   const [pillHistoryOpen, setPillHistoryOpen] = useState(false)
-  const [pillHistory, setPillHistory] = useState<PillSwallow[]>([])
+  const [pillHistory, setPillHistory] = useState<SessionDate[]>([])
 
   const addPill = (name: string, dosage : number, unit : string) => {
     const pill = {
@@ -59,9 +69,9 @@ function App(): React.JSX.Element {
     setPillAdderOpen(false)
   }
 
-  const takePill = (pill: Pill) => {
+  const takePills = (session: Dose[]) => {
     const pillSwallow = {
-      pill: pill,
+      session: session,
       date: new Date()
     }
     const oldPillHistory = pillHistory
@@ -89,7 +99,7 @@ function App(): React.JSX.Element {
       <PillModal isVisible={pillTakerOpen} closeWindow={() => setPillTakerOpen(false)} name={"Take a Pill"}>
         <PillTaker
           pills={pills}
-          takePill={(pill: Pill) => takePill(pill)}
+          takePills={(session: Dose[]) => takePills(session)}
         />
       </PillModal>
       <PillModal isVisible={pillManagerOpen} closeWindow={() => setPillManagerOpen(false)} name={"Manage Pills"}>

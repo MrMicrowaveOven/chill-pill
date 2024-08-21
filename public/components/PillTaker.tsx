@@ -16,10 +16,10 @@ type Dose = {
 
 type PillTakerProps = PropsWithChildren<{
     pills: Pill[];
-    takePill: Function;
+    takePills: Function;
 }>;
 
-const PillTaker = ({pills, takePill}: PillTakerProps) => {
+const PillTaker = ({pills, takePills}: PillTakerProps) => {
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState(0)
     const [items, setItems] = useState(pills.map((pill, index) => {
@@ -125,7 +125,7 @@ const PillTaker = ({pills, takePill}: PillTakerProps) => {
                 })}
             </View>
             <View style={styles.takePillsButton}>
-                <Button title="Take Pills" onPress={() => takePill(pills[value])}/>
+                <Button title="Take Pills" onPress={() => takePills(pillSession)}/>
             </View>
         </View>
     )

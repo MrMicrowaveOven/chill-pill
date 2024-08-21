@@ -19,7 +19,7 @@ const PillManager = ({pills, deletePill}: PillManagerProps) => {
             <ScrollView>
                 {pills.map((pill, index) => {
                     return(
-                        <View style={styles.pill}>
+                        <View style={styles.pill} key={index}>
                             <TouchableOpacity style={styles.deleteIconButton} onPress={() => deletePill(index)}>
                                 <Image style={styles.deleteIcon} source={require("../images/delete.png")}/>
                             </TouchableOpacity>
