@@ -27,7 +27,7 @@ const PillTaker = ({pills, takePills}: PillTakerProps) => {
     }))
     const QUANTITY_LIST = [1,2,3,4,5,6,7,8,9].map((num) => {return {label: num.toString(), value: num}})
     const [openQ, setOpenQ] = useState(false)
-    const [valueQ, setValueQ] = useState(0)
+    const [valueQ, setValueQ] = useState(1)
     const [itemsQ, setItemsQ] = useState(QUANTITY_LIST)
 
     const [pillSession, setPillSession] = useState<Dose[]>([])
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
+        alignItems: "center",
         paddingTop: 150,
     },
     picker: {
@@ -185,7 +186,8 @@ const styles = StyleSheet.create({
     },
     takePillsButton: {
         position: "absolute",
-        bottom: 0
+        bottom: 10,
+        width: "90%",
     }
 })
 
