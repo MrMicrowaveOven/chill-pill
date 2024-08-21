@@ -77,6 +77,7 @@ function App(): React.JSX.Element {
     const oldPillHistory = pillHistory
     const newPillHitory = oldPillHistory.concat([pillSwallow])
     setPillHistory(newPillHitory)
+    setPillTakerOpen(false)
   }
 
   const deletePill = (indexToDelete: number) => {
