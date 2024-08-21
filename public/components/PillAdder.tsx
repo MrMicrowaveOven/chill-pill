@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import type {PropsWithChildren} from 'react';
 
 type PillAdderProps = PropsWithChildren<{

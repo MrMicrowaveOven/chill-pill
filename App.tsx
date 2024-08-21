@@ -8,12 +8,10 @@
 import React, { useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
-  Button,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableHighlight,
-  View,
 } from 'react-native';
 import PillAdder from './public/components/PillAdder'
 import PillTaker from './public/components/PillTaker'
@@ -23,19 +21,10 @@ import PillModal from './public/components/PillModal';
 // import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 // const storage = new MMKVLoader().initialize();
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
 type Pill = {
   name: string;
   dosage: number;
   unit: string;
-}
-
-type PillSwallow = {
-  dose: Dose;
-  date: Date;
 }
 
 type SessionDate = {

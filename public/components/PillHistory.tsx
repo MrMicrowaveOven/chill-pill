@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
+import React from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import type {PropsWithChildren} from 'react';
 
 type Pill = {

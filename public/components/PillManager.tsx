@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import React from "react";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import type {PropsWithChildren} from 'react';
 
 type Pill = {
