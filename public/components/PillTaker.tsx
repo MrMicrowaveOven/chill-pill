@@ -111,11 +111,15 @@ const PillTaker = ({pills, takePills}: PillTakerProps) => {
                     />
                 </View>
             </View>
-            <Button title="Add Pill" onPress={() => addPillsToSession(pills[value], valueQ)}/>
+            <Button
+                title="Add Pill"
+                onPress={() => addPillsToSession(pills[value], valueQ)}
+                disabled={items.length == 0}
+            />
             <View style={styles.pillSession}>
                 {pillSession.map((dose, index) => {
                     return (
-                        <View style={styles.sessionDose}>
+                        <View style={styles.sessionDose} key={index}>
                             <TouchableOpacity style={styles.deleteIconButton} onPress={() => deletePillFromSession(index)}>
                                 <Image style={styles.deleteIcon} source={require("../images/delete.png")}/>
                             </TouchableOpacity>
