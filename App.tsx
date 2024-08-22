@@ -18,8 +18,8 @@ import PillTaker from './public/components/PillTaker'
 import PillManager from './public/components/PillManager'
 import PillHistory from './public/components/PillHistory'
 import PillModal from './public/components/PillModal';
-// import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
-// const storage = new MMKVLoader().initialize();
+import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
+const storage = new MMKVLoader().initialize();
 
 type Pill = {
   name: string;
@@ -38,13 +38,14 @@ type Dose = {
 }
 
 function App(): React.JSX.Element {
-  // const [pills, setPills] = useMMKVStorage<Pill[]>('pills', storage, [])
-  const [pills, setPills] = useState<Pill[]>([])
+  // const [pills, setPills] = useState<Pill[]>([])
+  const [pills, setPills] = useMMKVStorage<Pill[]>('pills', storage, [])
   const [pillAdderOpen, setPillAdderOpen] = useState(false)
   const [pillManagerOpen, setPillManagerOpen] = useState(false)
   const [pillTakerOpen, setPillTakerOpen] = useState(false)
   const [pillHistoryOpen, setPillHistoryOpen] = useState(false)
-  const [pillHistory, setPillHistory] = useState<SessionDate[]>([])
+  // const [pillHistory, setPillHistory] = useState<SessionDate[]>([])
+  const [pillHistory, setPillHistory] = useMMKVStorage<SessionDate[]>('pillHistory', storage, [])
 
   const addPill = (name: string, dosage : number, unit : string) => {
     const pill = {

@@ -33,7 +33,7 @@ const PillHistory = ({pillHistory}: PillHistoryProps) => {
             <ScrollView>
                 {pillHistory.map((sessionDate: SessionDate, index) => {
                     const { session } = sessionDate
-                    const { date } = sessionDate
+                    const date = new Date(sessionDate.date)
                     return (
                         <View style={styles.session} key={index}>
                             <Text style={styles.dateText}>{date.toDateString()}, {date.toTimeString()}</Text>
