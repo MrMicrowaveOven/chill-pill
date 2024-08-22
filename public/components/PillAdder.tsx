@@ -7,8 +7,8 @@ type PillAdderProps = PropsWithChildren<{
   }>;
 
 const PillAdder = ({addPill}: PillAdderProps) => {
-    const [name, setName] = useState("Rogain")
-    const [dosage, setDosage] = useState(5)
+    const [name, setName] = useState("")
+    const [dosage, setDosage] = useState(0)
     const [unit, setUnit] = useState("mg")
     return (
         <View>
@@ -30,7 +30,11 @@ const PillAdder = ({addPill}: PillAdderProps) => {
                 </View>
             </View>
             <View style={styles.addPillButton}>
-                <Button title="Add Pill" onPress={() => addPill(name, dosage, unit)}></Button>
+                <Button
+                    title="Add Pill"
+                    onPress={() => addPill(name, dosage, unit)}
+                    disabled={name === '' || dosage === 0}
+                />
             </View>
         </View>
     )
