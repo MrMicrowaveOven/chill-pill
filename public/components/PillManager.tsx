@@ -8,9 +8,10 @@ type PillManagerProps = PropsWithChildren<{
     pillTrash: Pill[];
     deletePill: Function;
     restorePill: Function;
-  }>;
+    emptyTrash: Function;
+}>;
 
-const PillManager = ({pills, pillTrash, deletePill, restorePill}: PillManagerProps) => {
+const PillManager = ({pills, pillTrash, deletePill, restorePill, emptyTrash}: PillManagerProps) => {
     return (
         <View style={styles.window}>
             <ScrollView>
@@ -36,17 +37,21 @@ const PillManager = ({pills, pillTrash, deletePill, restorePill}: PillManagerPro
                     )
                 })}
             </ScrollView>
+            {pillTrash.length > 0 && <TouchableOpacity style={styles.emptryTrashButton} onPress={() => emptyTrash()}>
+                <Image source={require('../images/empty_trash.png')} style={styles.emptyTrashIcon}/>
+            </TouchableOpacity>}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     window: {
-        width: "80%",
-        height: "80%",
+        width: "100%",
+        height: "100%",
+        marginTop: 600,
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     pill: {
         display: "flex",
@@ -75,6 +80,17 @@ const styles = StyleSheet.create({
         color: 'black',
         marginTop: 100,
         fontWeight: '500'
+    },
+    emptryTrashButton: {
+        position: 'absolute',
+        bottom: 485,
+        right: -75,
+        width: 100,
+        height: 100,
+    },
+    emptyTrashIcon: {
+        width: 100,
+        height: 100,
     }
 })
 

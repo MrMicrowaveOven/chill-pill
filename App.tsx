@@ -81,6 +81,25 @@ function App(): React.JSX.Element {
     setPillTrash(newPillTrash)
   }
 
+  const emptyTrash = () => {
+    Alert.alert(
+      'Empty Trash',
+      'Are you sure you want to empty your trash?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            setPillTrash([])
+          }
+        }
+      ]
+    );
+  }
+
   return (
     <SafeAreaView style={styles.app}>
       <TouchableOpacity style={[styles.box, styles.one]} onPress={() => setPillAdderOpen(true)}><Text style={styles.boxText}>Add a Pill</Text></TouchableOpacity>
@@ -104,6 +123,7 @@ function App(): React.JSX.Element {
           pillTrash={pillTrash}
           deletePill={(index: number) => deletePill(index)}
           restorePill={(index: number) => restorePill(index)}
+          emptyTrash={() => emptyTrash()}
         />
       </PillModal>
       <PillModal isVisible={pillHistoryOpen} closeWindow={() => setPillHistoryOpen(false)} name={"Pill History"}>
