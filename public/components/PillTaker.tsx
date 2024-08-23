@@ -129,7 +129,11 @@ const PillTaker = ({pills, takePills}: PillTakerProps) => {
                 })}
             </View>
             <View style={styles.takePillsButton}>
-                <Button title="Take Pills" onPress={() => takePills(pillSession)}/>
+                <Button
+                    title="Take Pills"
+                    onPress={() => takePills(pillSession)}
+                    disabled={pillSession.length === 0}
+                />
             </View>
         </View>
     )
