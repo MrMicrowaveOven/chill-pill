@@ -8,6 +8,7 @@
 import React, { useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  Alert,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -54,9 +55,20 @@ function App(): React.JSX.Element {
       unit: unit
     }
     const oldPills = pills
-    const newPills = oldPills.concat([pill])
-    setPills(newPills)
-    setPillAdderOpen(false)
+    let matchingPill = false
+    oldPills.forEach((oldPill) => {
+      if(oldPill.name === pill.name && oldPill.dosage === pill.dosage && oldPill.unit === pill.unit) {
+        matchingPill = true;
+        return
+      }
+    })
+    if(matchingPill) {
+      Alert.alert('You already have a pill with that Name, Dosage, and Unit')
+    } else {
+      const newPills = oldPills.concat([pill])
+      setPills(newPills)
+      setPillAdderOpen(false)
+    }
   }
 
   const takePills = (session: Dose[]) => {
