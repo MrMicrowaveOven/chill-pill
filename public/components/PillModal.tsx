@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     exitButton: {
         position: "absolute",
         top: 0,
-        right: 5
+        right: 10
     },
     exitButtonText: {
         fontSize: 35,
