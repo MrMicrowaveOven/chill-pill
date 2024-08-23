@@ -34,7 +34,7 @@ const PillAdder = ({addPill}: PillAdderProps) => {
                 <Button
                     title="Add Pill"
                     onPress={() => addPill(name, dosage, unit)}
-                    disabled={name === '' || dosage === 0}
+                    disabled={name === '' || dosage === 0 || Number.isNaN(dosage)}
                     width={300}
                     color={"lightskyblue"}
                 />
