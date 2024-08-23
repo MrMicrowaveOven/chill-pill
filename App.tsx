@@ -33,6 +33,7 @@ type Dose = {
 function App(): React.JSX.Element {
   // const [pills, setPills] = useState<Pill[]>([])
   const [pills, setPills] = useMMKVStorage<Pill[]>('pills', storage, [])
+  const [pillTrash, setPillTrash] = useMMKVStorage<Pill[]>('pillTrash', storage, [])
   const [pillAdderOpen, setPillAdderOpen] = useState(false)
   const [pillManagerOpen, setPillManagerOpen] = useState(false)
   const [pillTakerOpen, setPillTakerOpen] = useState(false)
@@ -75,9 +76,23 @@ function App(): React.JSX.Element {
   }
 
   const deletePill = (indexToDelete: number) => {
+    const pillToTrash = pills[indexToDelete]
+    const oldPillTrash = pillTrash
+    const newPillTrash = oldPillTrash.concat([pillToTrash])
+    setPillTrash(newPillTrash)
     const oldPills = pills
     const newPills = oldPills.filter((pill, index) => index !== indexToDelete)
     setPills(newPills)
+  }
+
+  const restorePill = (indexToRestore: number) => {
+    const pillToRestore = pillTrash[indexToRestore]
+    const oldPills = pills
+    const newPills = oldPills.concat([pillToRestore])
+    setPills(newPills)
+    const oldPillTrash = pillTrash
+    const newPillTrash = oldPillTrash.filter((pill, index) => index !== indexToRestore)
+    setPillTrash(newPillTrash)
   }
 
   return (
@@ -100,7 +115,9 @@ function App(): React.JSX.Element {
       <PillModal isVisible={pillManagerOpen} closeWindow={() => setPillManagerOpen(false)} name={"Manage Pills"}>
         <PillManager
           pills={pills}
+          pillTrash={pillTrash}
           deletePill={(index: number) => deletePill(index)}
+          restorePill={(index: number) => restorePill(index)}
         />
       </PillModal>
       <PillModal isVisible={pillHistoryOpen} closeWindow={() => setPillHistoryOpen(false)} name={"Pill History"}>

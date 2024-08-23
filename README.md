@@ -1,3 +1,6 @@
+# Start react-native server
+npx react-native start
+
 # Building for a Release
 ## Build for Android on a Local Phone
 Build for .apk
