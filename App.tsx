@@ -44,7 +44,7 @@ function App(): React.JSX.Element {
     if(matchingPill) {
       Alert.alert('You already have a pill with that Name, Dosage, and Unit')
     } else {
-      const newPills = oldPills.concat([pill])
+      const newPills = sortPills(oldPills.concat([pill]))
       setPills(newPills)
       setPillAdderOpen(false)
     }
@@ -61,10 +61,18 @@ function App(): React.JSX.Element {
     setPillTakerOpen(false)
   }
 
+  const sortPills = (pillList: Pill[]) => {
+    return pillList.sort(function(a, b) {
+      var textA = a.name.toUpperCase();
+      var textB = b.name.toUpperCase();
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+  }
+
   const deletePill = (indexToDelete: number) => {
     const pillToTrash = pills[indexToDelete]
     const oldPillTrash = pillTrash
-    const newPillTrash = oldPillTrash.concat([pillToTrash])
+    const newPillTrash = sortPills(oldPillTrash.concat([pillToTrash]))
     setPillTrash(newPillTrash)
     const oldPills = pills
     const newPills = oldPills.filter((pill, index) => index !== indexToDelete)
@@ -74,7 +82,7 @@ function App(): React.JSX.Element {
   const restorePill = (indexToRestore: number) => {
     const pillToRestore = pillTrash[indexToRestore]
     const oldPills = pills
-    const newPills = oldPills.concat([pillToRestore])
+    const newPills = sortPills(oldPills.concat([pillToRestore]))
     setPills(newPills)
     const oldPillTrash = pillTrash
     const newPillTrash = oldPillTrash.filter((pill, index) => index !== indexToRestore)
