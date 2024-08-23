@@ -11,6 +11,10 @@ type PillTakerProps = PropsWithChildren<{
     switchToPillAdder: Function;
 }>;
 
+interface SessionIndex {
+    [key: string]: Dose[]
+}
+
 const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState(0)
@@ -27,7 +31,7 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
     const addPillsToSession = (pill: Pill, quantity: number) => {
         const oldSession = pillSession
         let newSession = oldSession.concat([{pill: pill, quantity: quantity}])
-        // newSession = simplifySession(newSession)
+        newSession = simplifySession(newSession)
         setPillSession(newSession)
     }
 
@@ -37,42 +41,45 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
         setPillSession(newSession)
     }
 
-    // const simplifySession = (oldSession: Dose[]) => {
-    //     const sessionIndex = {}
-    //     oldSession.forEach((dose) => {
-    //         if(sessionIndex[dose.pill.name]) {
-    //             const pillsOfThatName = sessionIndex[dose.pill.name]
-    //             const matchingPill = pillsOfThatName.find((pill: Pill) => pill.dosage === dose.pill.dosage)
-    //             if (matchingPill) {
-    //                 const indexOfMatchingPill = pillsOfThatName.findIndex((pill) => pill ===matchingPill)
-    //                 sessionIndex[dose.pill.name][indexOfMatchingPill] = pillsOfThatName[indexOfMatchingPill] + dose.quantity
-    //             } else {
-    //                 sessionIndex[dose.pill.name] = sessionIndex[dose.pill.name].concat([{dosage: dose.pill.dosage, quantity: dose.quantity}])
-    //             }
-    //         } else {
-    //             sessionIndex[dose.pill.name] = [{dosage: dose.pill.dosage, quantity: dose.quantity}]
-    //         }
-    //     })
-    //     console.log("============")
-    //     console.log("OLD SESSION")
-    //     console.log(oldSession)
-    //     console.log("SESSION INDEX")
-    //     console.log(sessionIndex)
-    //     let newSession : Dose[] = []
-    //     Object.keys(sessionIndex).sort().forEach((name) => {
-    //         sessionIndex[name].sort((a:Pill,b:Pill) => a.dosage - b.dosage).forEach((dose) => {
-    //             newSession = newSession.concat([{
-    //                 quantity: dose.quantity,
-    //                 pill: {
-    //                     name: name,
-    //                     dosage: dose.dosage,
-    //                     unit: "mg"
-    //                 }
-    //             }])
-    //         })
-    //     })
-    //     return newSession
-    // }
+    const simplifySession = (oldSession: Dose[]) => {
+        const sessionIndex:SessionIndex = {}
+        oldSession.forEach((dose) => {
+            if(sessionIndex[dose.pill.name]) {
+                // Pill of that name is already in Index
+                const dosesOfThatName = sessionIndex[dose.pill.name]
+                const matchingPill = dosesOfThatName.find((doseInIndex: Dose) => doseInIndex.pill.dosage === dose.pill.dosage)
+                if (matchingPill) {
+                    // Dosage Matches
+                    const indexOfMatchingPill = dosesOfThatName.findIndex((pill) => pill ===matchingPill)
+                    sessionIndex[dose.pill.name][indexOfMatchingPill].quantity = dosesOfThatName[indexOfMatchingPill].quantity + dose.quantity
+                } else {
+                    // Add Pill of that Dosage
+                    sessionIndex[dose.pill.name] = sessionIndex[dose.pill.name].concat([{pill: dose.pill, quantity: dose.quantity}])
+                }
+            } else {
+                // Add pill name to Index
+                sessionIndex[dose.pill.name] = [{pill: dose.pill, quantity: dose.quantity}]
+            }
+        })
+        let newSession : Dose[] = []
+        Object.keys(sessionIndex).sort((a,b) => {
+            const textA = a.toUpperCase();
+            const textB = b.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        }).forEach((name) => {
+            sessionIndex[name].forEach((dose) => {
+                newSession = newSession.concat([{
+                    quantity: dose.quantity,
+                    pill: {
+                        name: name,
+                        dosage: dose.pill.dosage,
+                        unit: "mg"
+                    }
+                }])
+            })
+        })
+        return newSession
+    }
 
     return (
         <View style={styles.window}>
