@@ -1,25 +1,47 @@
 import React, { PropsWithChildren } from 'react'
-import { Text, TouchableHighlight } from 'react-native';
+import { DimensionValue, StyleSheet, Text, TouchableHighlight, TouchableOpacity } from 'react-native';
 
 type ButtonProps = PropsWithChildren<{
-    fontColor: string;
-    width: number;
-    height: number;
-    color: string;
+    fontColor?: string;
+    width?: DimensionValue;
+    height?: DimensionValue;
+    color?: string;
     title: string;
     onPress: Function;
-    disabled: boolean;
+    disabled?: boolean;
 }>;
 
 const Button = ({fontColor, width, height, color, title, onPress, disabled} : ButtonProps) => {
     return (
-        <TouchableHighlight onPress={() => onPress()}
-            style={{
-                width: width || 100, height: height || 50, backgroundColor: disabled ? "lightGray" : color}}
+        <TouchableOpacity
+            onPress={() => !disabled && onPress()}
+            style={[styles.button, {
+                width: width || 100,
+                height: height || 50,
+                backgroundColor:
+                    disabled
+                        ? "lightgray"
+                        : (color || "cyan")
+            }]}
         >
-            <Text style={{color: fontColor}}>{title}</Text>
-        </TouchableHighlight>
+            <Text style={[styles.text, {color: fontColor || "black"}]}>{title}</Text>
+        </TouchableOpacity>
     )
 }
+
+const styles = StyleSheet.create({
+    button: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        borderColor: "black",
+        borderWidth: 1,
+        borderStyle: "solid"
+    },
+    text: {
+        fontSize: 20,
+    }
+})
 
 export default Button

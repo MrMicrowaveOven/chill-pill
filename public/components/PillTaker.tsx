@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Button from "./Button";
 import type {PropsWithChildren} from 'react';
 import DropDownPicker from "react-native-dropdown-picker";
 
@@ -115,6 +116,8 @@ const PillTaker = ({pills, takePills}: PillTakerProps) => {
                 title="Add Pill"
                 onPress={() => addPillsToSession(pills[value], valueQ)}
                 disabled={items.length == 0}
+                width={300}
+                color={'lightskyblue'}
             />
             <View style={styles.pillSession}>
                 {pillSession.map((dose, index) => {
@@ -131,8 +134,10 @@ const PillTaker = ({pills, takePills}: PillTakerProps) => {
             <View style={styles.takePillsButton}>
                 <Button
                     title="Take Pills"
+                    color="lightskyblue"
                     onPress={() => takePills(pillSession)}
                     disabled={pillSession.length === 0}
+                    width={"100%"}
                 />
             </View>
         </View>

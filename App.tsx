@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   four: {
     right: 0,
     bottom: 0,
-    backgroundColor: "blue"
+    backgroundColor: "cornflowerblue"
   }
 });
 

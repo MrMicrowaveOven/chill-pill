@@ -6,13 +6,14 @@ type PillModalProps = PropsWithChildren<{
     isVisible: boolean;
     closeWindow: Function;
     name: string;
+    backgroundColor?: string;
   }>;
 
-const PillModal = ({isVisible, closeWindow, name, children}: PillModalProps) => {
+const PillModal = ({isVisible, closeWindow, name, backgroundColor, children}: PillModalProps) => {
     return (
         <Modal visible={isVisible} animationType="slide" transparent={true}>
             <View style={styles.modal}>
-                <View style={styles.window}>
+                <View style={[styles.window, {backgroundColor: backgroundColor || "lightgray"}]}>
                     <TouchableWithoutFeedback onPress={() => closeWindow()}>
                         <View style={styles.exitButton}>
                             <Text style={styles.exitButtonText}>X</Text>
@@ -41,7 +42,6 @@ const styles = StyleSheet.create({
         height: "100%",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "lightgray"
     },
     exitButton: {
         position: "absolute",
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         top: 20,
         fontSize: 50,
         color: "black",
-        marginBottom: 20,
+        paddingBottom: 20,
     },
     children: {
         display: "flex",

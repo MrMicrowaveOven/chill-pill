@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import type {PropsWithChildren} from 'react';
+import Button from "./Button";
 
 type PillAdderProps = PropsWithChildren<{
     addPill: Function;
@@ -11,7 +12,7 @@ const PillAdder = ({addPill}: PillAdderProps) => {
     const [dosage, setDosage] = useState(0)
     const [unit, setUnit] = useState("mg")
     return (
-        <View>
+        <View style={styles.window}>
             <View style={styles.addPillForm}>
                 <View style={styles.input}>
                     <Text style={styles.inputLabel}>Name of Medication</Text>
@@ -34,6 +35,8 @@ const PillAdder = ({addPill}: PillAdderProps) => {
                     title="Add Pill"
                     onPress={() => addPill(name, dosage, unit)}
                     disabled={name === '' || dosage === 0}
+                    width={300}
+                    color={"lightskyblue"}
                 />
             </View>
         </View>
@@ -41,9 +44,17 @@ const PillAdder = ({addPill}: PillAdderProps) => {
 }
 
 const styles = StyleSheet.create({
+    window: {
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: 'center',
+        justifyContent: "flex-start"
+    },
     addPillForm: {
         width: "80%",
-        height: "80%",
+        marginTop: 120
     },
     input: {
 
@@ -54,6 +65,7 @@ const styles = StyleSheet.create({
     },
     inputText: {
         fontSize: 30,
+        backgroundColor: "white"
     },
     inputTextBorder: {
         borderColor: "black",
@@ -74,13 +86,8 @@ const styles = StyleSheet.create({
         margin: 5
     },
     addPillButton: {
-        position: "absolute",
-        bottom: 10,
-        left: 0,
-        right: 0,
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
+        position: 'absolute',
+        bottom: 10
     }
 })
 
