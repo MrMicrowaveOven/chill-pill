@@ -137,7 +137,7 @@ const PillTaker = ({pills, takePills}: PillTakerProps) => {
                     color="lightskyblue"
                     onPress={() => takePills(pillSession)}
                     disabled={pillSession.length === 0}
-                    width={"100%"}
+                    width={300}
                 />
             </View>
         </View>
@@ -200,7 +200,10 @@ const styles = StyleSheet.create({
     takePillsButton: {
         position: "absolute",
         bottom: 10,
-        width: "90%",
+        width: "100%",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
     }
 })
 
