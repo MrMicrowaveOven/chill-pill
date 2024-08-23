@@ -16,12 +16,12 @@ const Button = ({fontColor, width, height, color, title, onPress, disabled} : Bu
         <TouchableOpacity
             onPress={() => !disabled && onPress()}
             style={[styles.button, {
-                width: width || 100,
+                width: width || 300,
                 height: height || 50,
                 backgroundColor:
                     disabled
                         ? "lightgray"
-                        : (color || "cyan")
+                        : (color || "lightskyblue")
             }]}
         >
             <Text style={[styles.text, {color: fontColor || "black"}]}>{title}</Text>
