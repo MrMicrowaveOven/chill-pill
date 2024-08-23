@@ -16,7 +16,7 @@ const PillModal = ({isVisible, closeWindow, name, backgroundColor, children}: Pi
                 <View style={[styles.window, {backgroundColor: backgroundColor || "lightgray"}]}>
                     <TouchableWithoutFeedback onPress={() => closeWindow()}>
                         <View style={styles.exitButton}>
-                            <Text style={styles.exitButtonText}>X</Text>
+                            <Text style={styles.exitButtonText}>✖</Text>
                         </View>
                     </TouchableWithoutFeedback>
                     <Text style={styles.title}>{name}</Text>
@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
         right: 5
     },
     exitButtonText: {
-        fontSize: 30,
-        fontWeight: "900"
+        fontSize: 35,
+        color: "black"
     },
     title: {
         position: "absolute",
