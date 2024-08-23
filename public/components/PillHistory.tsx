@@ -56,6 +56,9 @@ const styles = StyleSheet.create({
     historyScroll: {
         width: '100%',
         height: '80%',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'darkgray'
     },
     swallow: {
         color: "black"
@@ -73,7 +76,8 @@ const styles = StyleSheet.create({
     },
     downloadHistoryButton: {
         position: 'absolute',
-        bottom: 10
+        bottom: 10,
+        display: 'none'
     }
 })
 
