@@ -3,17 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Button from "./Button";
 import type {PropsWithChildren} from 'react';
 import DropDownPicker from "react-native-dropdown-picker";
-
-type Pill = {
-    name: string;
-    dosage: number;
-    unit: string;
-}
-
-type Dose = {
-    pill: Pill;
-    quantity: number;
-}
+import { Pill, Dose } from '../types'
 
 type PillTakerProps = PropsWithChildren<{
     pills: Pill[];

@@ -1,12 +1,7 @@
 import React from "react";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import type {PropsWithChildren} from 'react';
-
-type Pill = {
-    name: string;
-    dosage: number;
-    unit: string;
-}
+import { Pill } from '../types'
 
 type PillManagerProps = PropsWithChildren<{
     pills: Pill[];

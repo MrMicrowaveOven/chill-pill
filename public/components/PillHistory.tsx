@@ -1,27 +1,7 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import type {PropsWithChildren} from 'react';
-
-type Pill = {
-    name: string;
-    dosage: number;
-    unit: string;
-}
-
-type PillSwallow = {
-    pill: Pill,
-    date: Date;
-}
-
-type SessionDate = {
-    date: Date;
-    session: Dose[];
-}
-
-type Dose = {
-    pill: Pill;
-    quantity: number;
-}
+import { SessionDate } from '../types'
 
 type PillHistoryProps = PropsWithChildren<{
     pillHistory: SessionDate[]
