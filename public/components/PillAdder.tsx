@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
     },
     inputText: {
         fontSize: 30,
-        backgroundColor: "white"
+        backgroundColor: "white",
+        color: 'black'
     },
     inputTextBorder: {
         borderColor: "black",
