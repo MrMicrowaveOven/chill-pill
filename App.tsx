@@ -1,18 +1,10 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React, { useState } from 'react';
-import type {PropsWithChildren} from 'react';
 import {
   Alert,
   SafeAreaView,
   StyleSheet,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 import PillAdder from './public/components/PillAdder'
 import PillTaker from './public/components/PillTaker'
@@ -90,10 +82,10 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={styles.app}>
-      <TouchableHighlight style={[styles.box, styles.one]} onPress={() => setPillAdderOpen(true)}><Text style={styles.boxText}>Add a Pill</Text></TouchableHighlight>
-      <TouchableHighlight style={[styles.box, styles.two]} onPress={() => setPillTakerOpen(true)}><Text style={styles.boxText}>Take a Pill</Text></TouchableHighlight>
-      <TouchableHighlight style={[styles.box, styles.three]} onPress={() => setPillManagerOpen(true)}><Text style={styles.boxText}>Manage Pills</Text></TouchableHighlight>
-      <TouchableHighlight style={[styles.box, styles.four]} onPress={() => setPillHistoryOpen(true)}><Text style={styles.boxText}>Pill History</Text></TouchableHighlight>
+      <TouchableOpacity style={[styles.box, styles.one]} onPress={() => setPillAdderOpen(true)}><Text style={styles.boxText}>Add a Pill</Text></TouchableOpacity>
+      <TouchableOpacity style={[styles.box, styles.two]} onPress={() => setPillTakerOpen(true)}><Text style={styles.boxText}>Take a Pill</Text></TouchableOpacity>
+      <TouchableOpacity style={[styles.box, styles.three]} onPress={() => setPillManagerOpen(true)}><Text style={styles.boxText}>Manage Pills</Text></TouchableOpacity>
+      <TouchableOpacity style={[styles.box, styles.four]} onPress={() => setPillHistoryOpen(true)}><Text style={styles.boxText}>Pill History</Text></TouchableOpacity>
       <PillModal isVisible={pillAdderOpen} closeWindow={() => setPillAdderOpen(false)} name={"Add a Pill"}>
         <PillAdder
           addPill={(name: string, dosage: number, unit: string) => addPill(name, dosage, unit)}
@@ -132,6 +124,9 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    borderColor: "black",
+    borderWidth: 1,
+    borderStyle: "solid"
   },
   boxText: {
     color: "black",
