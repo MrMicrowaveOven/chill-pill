@@ -8,9 +8,10 @@ import { Pill, Dose } from '../types'
 type PillTakerProps = PropsWithChildren<{
     pills: Pill[];
     takePills: Function;
+    switchToPillAdder: Function;
 }>;
 
-const PillTaker = ({pills, takePills}: PillTakerProps) => {
+const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState(0)
     const [items, setItems] = useState(pills.map((pill, index) => {
@@ -75,61 +76,72 @@ const PillTaker = ({pills, takePills}: PillTakerProps) => {
 
     return (
         <View style={styles.window}>
-            <View style={styles.picker}>
-                <View style={styles.pillPicker}>
-                    <DropDownPicker
-                        open={open}
-                        setOpen={setOpen}
-                        items={items}
-                        setItems={setItems}
-                        value={value}
-                        setValue={setValue}
-                        placeholder={'Choose a pill'}
-                        textStyle={{fontSize: 20}}
-                    />
+            {pills.length === 0 &&
+                <View>
+                    <Text style={styles.noPillsText}>No pills to take!</Text>
+                    <TouchableOpacity onPress={() => switchToPillAdder()}>
+                        <Text style={[styles.noPillsText, styles.addPillsText]}>Add some pills!</Text>
+                    </TouchableOpacity>
+                    
                 </View>
-                <Text style={styles.xText}>X</Text>
-                <View style={styles.quantityPicker}>
-                    <DropDownPicker
-                        open={openQ}
-                        setOpen={setOpenQ}
-                        items={itemsQ}
-                        setItems={setItemsQ}
-                        value={valueQ}
-                        setValue={setValueQ}
-                        placeholder={'0'}
-                        textStyle={{fontSize: 20}}
-                    />
+            }
+            {pills.length > 0 && <View style={styles.pillsView}>
+                <View style={styles.picker}>
+                    <View style={styles.pillPicker}>
+                        <DropDownPicker
+                            open={open}
+                            setOpen={setOpen}
+                            items={items}
+                            setItems={setItems}
+                            value={value}
+                            setValue={setValue}
+                            placeholder={'Choose a pill'}
+                            textStyle={{fontSize: 20}}
+                        />
+                    </View>
+                    <Text style={styles.xText}>X</Text>
+                    <View style={styles.quantityPicker}>
+                        <DropDownPicker
+                            open={openQ}
+                            setOpen={setOpenQ}
+                            items={itemsQ}
+                            setItems={setItemsQ}
+                            value={valueQ}
+                            setValue={setValueQ}
+                            placeholder={'0'}
+                            textStyle={{fontSize: 20}}
+                        />
+                    </View>
                 </View>
-            </View>
-            <Button
-                title="Add Pill"
-                onPress={() => addPillsToSession(pills[value], valueQ)}
-                disabled={items.length == 0}
-                width={300}
-                color={'lightskyblue'}
-            />
-            <View style={styles.pillSession}>
-                {pillSession.map((dose, index) => {
-                    return (
-                        <View style={styles.sessionDose} key={index}>
-                            <TouchableOpacity style={styles.deleteIconButton} onPress={() => deletePillFromSession(index)}>
-                                <Image style={styles.deleteIcon} source={require("../images/delete.png")}/>
-                            </TouchableOpacity>
-                            <Text style={styles.sessionDoseText} key={index}>{dose.pill.name}: {dose.pill.dosage}{dose.pill.unit} X {dose.quantity}</Text>
-                        </View>
-                    )
-                })}
-            </View>
-            <View style={styles.takePillsButton}>
                 <Button
-                    title="Take Pills"
-                    color="lightskyblue"
-                    onPress={() => takePills(pillSession)}
-                    disabled={pillSession.length === 0}
+                    title="Add Pill"
+                    onPress={() => addPillsToSession(pills[value], valueQ)}
+                    disabled={items.length == 0}
                     width={300}
+                    color={'lightskyblue'}
                 />
-            </View>
+                <View style={styles.pillSession}>
+                    {pillSession.map((dose, index) => {
+                        return (
+                            <View style={styles.sessionDose} key={index}>
+                                <TouchableOpacity style={styles.deleteIconButton} onPress={() => deletePillFromSession(index)}>
+                                    <Image style={styles.deleteIcon} source={require("../images/delete.png")}/>
+                                </TouchableOpacity>
+                                <Text style={styles.sessionDoseText} key={index}>{dose.pill.name}: {dose.pill.dosage}{dose.pill.unit} X {dose.quantity}</Text>
+                            </View>
+                        )
+                    })}
+                </View>
+                <View style={styles.takePillsButton}>
+                    <Button
+                        title="Take Pills"
+                        color="lightskyblue"
+                        onPress={() => takePills(pillSession)}
+                        disabled={pillSession.length === 0}
+                        width={300}
+                    />
+                </View>
+            </View>}
         </View>
     )
 }
@@ -143,6 +155,21 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "center",
         paddingTop: 150,
+    },
+    noPillsText: {
+        fontSize: 20,
+        textAlign: "center",
+        margin: 5,
+    },
+    addPillsText: {
+        color: 'blue',
+    },
+    pillsView: {
+        width: "100%",
+        height: "100%",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
     },
     picker: {
         display: "flex",

@@ -100,6 +100,12 @@ function App(): React.JSX.Element {
     );
   }
 
+  const switchToPillAdder = () => {
+    setPillManagerOpen(false)
+    setPillTakerOpen(false)
+    setTimeout(() => setPillAdderOpen(true), 200)
+  }
+
   return (
     <SafeAreaView style={styles.app}>
       <TouchableOpacity style={[styles.box, styles.one]} onPress={() => setPillAdderOpen(true)}><Text style={styles.boxText}>Add a Pill</Text></TouchableOpacity>
@@ -115,6 +121,7 @@ function App(): React.JSX.Element {
         <PillTaker
           pills={pills}
           takePills={(session: Dose[]) => takePills(session)}
+          switchToPillAdder={() => switchToPillAdder()}
         />
       </PillModal>
       <PillModal isVisible={pillManagerOpen} closeWindow={() => setPillManagerOpen(false)} name={"Manage Pills"}>
@@ -124,6 +131,7 @@ function App(): React.JSX.Element {
           deletePill={(index: number) => deletePill(index)}
           restorePill={(index: number) => restorePill(index)}
           emptyTrash={() => emptyTrash()}
+          switchToPillAdder={() => switchToPillAdder()}
         />
       </PillModal>
       <PillModal isVisible={pillHistoryOpen} closeWindow={() => setPillHistoryOpen(false)} name={"Pill History"}>

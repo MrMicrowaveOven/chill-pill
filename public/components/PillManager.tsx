@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import type {PropsWithChildren} from 'react';
 import { Pill } from '../types'
 
@@ -9,11 +9,20 @@ type PillManagerProps = PropsWithChildren<{
     deletePill: Function;
     restorePill: Function;
     emptyTrash: Function;
+    switchToPillAdder: Function;
 }>;
 
-const PillManager = ({pills, pillTrash, deletePill, restorePill, emptyTrash}: PillManagerProps) => {
+const PillManager = ({pills, pillTrash, deletePill, restorePill, emptyTrash, switchToPillAdder}: PillManagerProps) => {
     return (
         <View style={styles.window}>
+            {pills.length === 0 && pillTrash.length === 0 &&
+                <View>
+                    <Text style={styles.noPillsText}>No pills to manage!</Text>
+                    <TouchableOpacity onPress={() => switchToPillAdder()}>
+                        <Text style={[styles.noPillsText, styles.addPillsText]}>Add some pills!</Text>
+                    </TouchableOpacity>
+                </View>
+            }
             <ScrollView>
                 {pills.map((pill, index) => {
                     return(
@@ -52,6 +61,14 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+    },
+    noPillsText: {
+        fontSize: 20,
+        textAlign: "center",
+        margin: 5,
+    },
+    addPillsText: {
+        color: 'blue',
     },
     pill: {
         display: "flex",
