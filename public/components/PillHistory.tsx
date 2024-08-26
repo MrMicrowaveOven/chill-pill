@@ -22,7 +22,7 @@ const PillHistory = ({pillHistory}: PillHistoryProps) => {
                         const date = new Date(sessionDate.date)
                         return (
                             <Text style={styles.session} key={index}>
-                                <Text style={styles.dateText}>{date.toDateString()}, {date.toTimeString()}{"\n"}</Text>
+                                <Text style={styles.dateText}>{date.toDateString()}, {date.toLocaleTimeString()}{"\n"}</Text>
                                 {session.map(((swallow, index) => {
                                     return(
                                         <Text style={styles.dose} key={index}>{"\t\t"}{swallow.pill.name}, {swallow.pill.dosage}{swallow.pill.unit} X {swallow.quantity}{"\n"}</Text>
