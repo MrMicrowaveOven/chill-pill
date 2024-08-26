@@ -16,20 +16,23 @@ const PillHistory = ({pillHistory}: PillHistoryProps) => {
         <View style={styles.window}>
             <View style={styles.history}>
                 <ScrollView style={styles.historyScroll}>
+                    <Text selectable={true}>
                     {pillHistory.map((sessionDate: SessionDate, index) => {
                         const { session } = sessionDate
                         const date = new Date(sessionDate.date)
                         return (
-                            <View style={styles.session} key={index}>
-                                <Text style={styles.dateText}>{date.toDateString()}, {date.toTimeString()}</Text>
+                            <Text style={styles.session} key={index}>
+                                <Text style={styles.dateText}>{date.toDateString()}, {date.toTimeString()}{"\n"}</Text>
                                 {session.map(((swallow, index) => {
                                     return(
-                                        <Text style={styles.dose} key={index}>{swallow.pill.name}, {swallow.pill.dosage}{swallow.pill.unit} X {swallow.quantity}</Text>
+                                        <Text style={styles.dose} key={index}>{"\t\t"}{swallow.pill.name}, {swallow.pill.dosage}{swallow.pill.unit} X {swallow.quantity}{"\n"}</Text>
                                     )
                                 }))}
-                            </View>
+                                {"\n"}
+                            </Text>
                         )
                     })}
+                    </Text>
                 </ScrollView>
             </View>
             <View style={styles.downloadHistoryButton}>
