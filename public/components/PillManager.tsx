@@ -23,31 +23,33 @@ const PillManager = ({pills, pillTrash, deletePill, restorePill, emptyTrash, swi
                     </TouchableOpacity>
                 </View>
             }
-            <View style={styles.pills}>
-                <ScrollView style={styles.scroll}>
-                    {pills.map((pill, index) => {
-                        return(
-                            <View style={styles.pill} key={index}>
-                                <TouchableOpacity style={styles.deleteIconButton} onPress={() => deletePill(index)}>
-                                    <Image style={styles.deleteIcon} source={require("../images/delete.png")}/>
-                                </TouchableOpacity>
-                                <Text key={index} style={styles.pillText}>{pill.name}: {pill.dosage}{pill.unit}</Text>
-                            </View>
-                        )
-                    })}
-                    {pillTrash.length > 0 && <Text style={styles.trashTitle}>Trash</Text>}
-                    {pillTrash.map((pill, index) => {
-                        return (
-                            <View style={styles.pill} key={index}>
-                                <TouchableOpacity style={styles.deleteIconButton} onPress={() => restorePill(index)}>
-                                    <Image style={styles.deleteIcon} source={require("../images/reload.png")}/>
-                                </TouchableOpacity>
-                                <Text key={index} style={styles.pillText}>{pill.name}: {pill.dosage}{pill.unit}</Text>
-                            </View>
-                        )
-                    })}
-                </ScrollView>
-            </View>
+            {(pills.length > 0 || pillTrash.length > 0) &&
+                <View style={styles.pills}>
+                    <ScrollView style={styles.scroll}>
+                        {pills.map((pill, index) => {
+                            return(
+                                <View style={styles.pill} key={index}>
+                                    <TouchableOpacity style={styles.deleteIconButton} onPress={() => deletePill(index)}>
+                                        <Image style={styles.deleteIcon} source={require("../images/delete.png")}/>
+                                    </TouchableOpacity>
+                                    <Text key={index} style={styles.pillText}>{pill.name}: {pill.dosage}{pill.unit}</Text>
+                                </View>
+                            )
+                        })}
+                        {pillTrash.length > 0 && <Text style={styles.trashTitle}>Trash</Text>}
+                        {pillTrash.map((pill, index) => {
+                            return (
+                                <View style={styles.pill} key={index}>
+                                    <TouchableOpacity style={styles.deleteIconButton} onPress={() => restorePill(index)}>
+                                        <Image style={styles.deleteIcon} source={require("../images/reload.png")}/>
+                                    </TouchableOpacity>
+                                    <Text key={index} style={styles.pillText}>{pill.name}: {pill.dosage}{pill.unit}</Text>
+                                </View>
+                            )
+                        })}
+                    </ScrollView>
+                </View>
+            }
             {pillTrash.length > 0 && <TouchableOpacity style={styles.emptyTrashButton} onPress={() => emptyTrash()}>
                 <Image source={require('../images/empty_trash.png')} style={styles.emptyTrashIcon}/>
             </TouchableOpacity>}
