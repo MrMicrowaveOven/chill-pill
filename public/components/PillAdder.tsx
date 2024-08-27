@@ -17,14 +17,14 @@ const PillAdder = ({addPill}: PillAdderProps) => {
                 <View style={styles.input}>
                     <Text style={styles.inputLabel}>Name of Medication</Text>
                     <View style={styles.inputTextBorder}>
-                        <TextInput style={styles.inputText} onChangeText={(name) => setName(name)}></TextInput>
+                        <TextInput maxLength={22} style={styles.inputText} onChangeText={(name) => setName(name)}></TextInput>
                     </View>
                 </View>
                 <View style={styles.input}>
                     <Text style={styles.inputLabel}>Dosage</Text>
                     <View style={styles.inputDosage}>
                         <View style={[styles.inputTextBorder, styles.inputDosageBorder]}>
-                            <TextInput style={styles.inputText} onChangeText={(dosage) => setDosage(parseFloat(dosage))} keyboardType='numeric'></TextInput>
+                            <TextInput maxLength={8} style={styles.inputText} onChangeText={(dosage) => setDosage(parseFloat(dosage))} keyboardType='numeric'></TextInput>
                         </View>
                         <Text style={styles.mgDisplay}>mg</Text>
                     </View>
