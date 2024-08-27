@@ -48,7 +48,7 @@ const PillManager = ({pills, pillTrash, deletePill, restorePill, emptyTrash, swi
                     })}
                 </ScrollView>
             </View>
-            {pillTrash.length > 0 && <TouchableOpacity style={styles.emptryTrashButton} onPress={() => emptyTrash()}>
+            {pillTrash.length > 0 && <TouchableOpacity style={styles.emptyTrashButton} onPress={() => emptyTrash()}>
                 <Image source={require('../images/empty_trash.png')} style={styles.emptyTrashIcon}/>
             </TouchableOpacity>}
         </View>
@@ -68,8 +68,12 @@ const styles = StyleSheet.create({
         height: '70%'
     },
     scroll: {
+        marginTop: 0,
         width: '100%',
-        height: '80%',
+        height: '70%',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'darkgray'
     },
     noPillsText: {
         fontSize: 20,
@@ -104,19 +108,21 @@ const styles = StyleSheet.create({
     trashTitle: {
         fontSize: 40,
         color: 'black',
-        marginTop: 100,
+        marginTop: 20,
+        textAlign: 'center',
         fontWeight: '500'
     },
-    emptryTrashButton: {
+    emptyTrashButton: {
         position: 'absolute',
         bottom: 20,
-        right: 50,
-        width: 100,
-        height: 100,
+        right: 20,
+        width: 75,
+        height: 75,
     },
     emptyTrashIcon: {
-        width: 100,
-        height: 100,
+        // position: 'absolute'
+        width: 75,
+        height: 75,
     }
 })
 
