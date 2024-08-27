@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
         borderColor: 'darkgray'
     },
     noPillsText: {
+        color: 'black',
         fontSize: 20,
         textAlign: "center",
         margin: 5,

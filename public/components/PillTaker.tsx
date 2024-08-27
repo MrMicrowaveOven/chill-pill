@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     noPillsText: {
+        color: 'black',
         fontSize: 20,
         textAlign: "center",
         margin: 5,
