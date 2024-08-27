@@ -82,7 +82,7 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
     }
 
     return (
-        <View style={styles.window}>
+        <View style={[styles.window, pills.length > 0 && {paddingTop: 150}]}>
             {pills.length === 0 &&
                 <View>
                     <Text style={styles.noPillsText}>No pills to take!</Text>
@@ -159,9 +159,8 @@ const styles = StyleSheet.create({
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "flex-start",
+        justifyContent: "center",
         alignItems: "center",
-        paddingTop: 150,
     },
     noPillsText: {
         fontSize: 20,
