@@ -60,16 +60,22 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         display: "flex",
+        flexDirection: 'column',
         justifyContent: "center",
         alignItems: "center",
     },
     pills: {
         width: '100%',
-        height: '70%'
+        height: '70%',
+        display: "flex",
+        flexDirection: 'column',
+        justifyContent: "center",
+        alignItems: "center",
+
     },
     scroll: {
         marginTop: 0,
-        width: '100%',
+        width: '90%',
         height: '70%',
         borderWidth: 1,
         borderStyle: 'solid',
@@ -115,7 +121,7 @@ const styles = StyleSheet.create({
     emptyTrashButton: {
         position: 'absolute',
         bottom: 20,
-        right: -5,
+        right: 20,
         width: 75,
         height: 75,
     },

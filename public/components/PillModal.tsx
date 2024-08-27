@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     window: {
         width: "100%",
         height: "100%",
+        flexDirection: 'column',
         justifyContent: "center",
         alignItems: "center",
     },
@@ -60,7 +61,10 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
     },
     children: {
+        width: '100%',
+        height: '100%',
         display: "flex",
+        flexDirection: 'column',
         justifyContent: "center",
         alignItems: "center"
     }

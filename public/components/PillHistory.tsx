@@ -54,10 +54,13 @@ const styles = StyleSheet.create({
     history: {
         marginTop: 120,
         width: '100%',
-        height: '70%'
+        height: '70%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
     },
     historyScroll: {
-        width: '100%',
+        width: '90%',
         height: '80%',
         borderWidth: 1,
         borderStyle: 'solid',
