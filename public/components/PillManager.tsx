@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     emptyTrashButton: {
         position: 'absolute',
         bottom: 20,
-        right: 20,
+        right: -5,
         width: 75,
         height: 75,
     },
