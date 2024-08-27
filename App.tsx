@@ -24,6 +24,7 @@ function App(): React.JSX.Element {
   const [pillTakerOpen, setPillTakerOpen] = useState(false)
   const [pillHistoryOpen, setPillHistoryOpen] = useState(false)
   const [pillHistory, setPillHistory] = useMMKVStorage<SessionDate[]>('pillHistory', storage, [])
+  const [newStyle, setNewStyle] = useMMKVStorage<boolean>('newStyle', storage, false)
 
   // setPills([])
   // setPillTrash([])
@@ -116,10 +117,10 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={styles.app}>
-      <TouchableOpacity style={[styles.box, styles.one]} onPress={() => setPillAdderOpen(true)}><Text style={styles.boxText}>Add a Pill</Text></TouchableOpacity>
-      <TouchableOpacity style={[styles.box, styles.two]} onPress={() => setPillTakerOpen(true)}><Text style={styles.boxText}>Take a Pill</Text></TouchableOpacity>
-      <TouchableOpacity style={[styles.box, styles.three]} onPress={() => setPillManagerOpen(true)}><Text style={styles.boxText}>Manage Pills</Text></TouchableOpacity>
-      <TouchableOpacity style={[styles.box, styles.four]} onPress={() => setPillHistoryOpen(true)}><Text style={styles.boxText}>Pill History</Text></TouchableOpacity>
+      <TouchableOpacity style={[styles.box, styles.one, newStyle && styles.box2, newStyle && styles.one2]} onPress={() => setPillAdderOpen(true)}><Text style={styles.boxText}>Add a Pill</Text></TouchableOpacity>
+      <TouchableOpacity style={[styles.box, newStyle ? styles.three : styles.two, newStyle && styles.box2, newStyle && styles.two2]} onPress={() => setPillTakerOpen(true)}><Text style={styles.boxText}>Take a Pill</Text></TouchableOpacity>
+      <TouchableOpacity style={[styles.box, newStyle ? styles.two : styles.three, newStyle && styles.box2, newStyle && styles.three2]} onPress={() => setPillManagerOpen(true)}><Text style={styles.boxText}>Manage Pills</Text></TouchableOpacity>
+      <TouchableOpacity style={[styles.box, styles.four, newStyle && styles.box2, newStyle && styles.four2]} onPress={() => setPillHistoryOpen(true)}><Text style={styles.boxText}>Pill History</Text></TouchableOpacity>
       <PillModal isVisible={pillAdderOpen} closeWindow={() => setPillAdderOpen(false)} name={"Add a Pill"}>
         <PillAdder
           addPill={(name: string, dosage: number, unit: string) => addPill(name, dosage, unit)}
@@ -147,6 +148,9 @@ function App(): React.JSX.Element {
           pillHistory={pillHistory}
         />
       </PillModal>
+      <TouchableOpacity style={styles.styleChanger} onPress={() => setNewStyle(!newStyle)}>
+        <Text style={styles.styleChangerText}>Change Style</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -166,6 +170,23 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
     borderStyle: "solid"
+  },
+  box2: {
+    width: '100%',
+    height: '25%',
+    left: 0,
+  },
+  one2: {
+    top: 0
+  },
+  two2: {
+    top: '50%'
+  },
+  three2: {
+    top: '25%'
+  },
+  four2: {
+    top: '75%'
   },
   boxText: {
     color: "black",
@@ -193,6 +214,17 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: "cornflowerblue"
+  },
+  styleChanger: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    width: 100,
+  },
+  styleChangerText: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: 'black'
   }
 });
 
