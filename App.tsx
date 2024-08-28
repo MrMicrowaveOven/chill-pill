@@ -14,6 +14,7 @@ import PillModal from './public/components/PillModal';
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
 import { Pill, Dose, SessionDate } from './public/types'
+import FlashMessage, { showMessage } from "react-native-flash-message";
 
 function App(): React.JSX.Element {
   // const [pills, setPills] = useState<Pill[]>([])
@@ -48,6 +49,19 @@ function App(): React.JSX.Element {
       const newPills = sortPills(oldPills.concat([pill]))
       setPills(newPills)
       setPillAdderOpen(false)
+      if(newPills.length === oldPills.length + 1) {
+        showMessage({
+          message: 'Pill Added!',
+          description: `${pill.name} ${pill.dosage}${pill.unit}`,
+          type: 'success'
+        })
+      } else {
+        showMessage({
+          message: 'Error adding Pill',
+          description: "",
+          type: 'danger'
+        })
+      }
     }
   }
 
@@ -60,6 +74,23 @@ function App(): React.JSX.Element {
     const newPillHitory = oldPillHistory.concat([pillSwallow])
     setPillHistory(newPillHitory)
     setPillTakerOpen(false)
+    if(newPillHitory.length === oldPillHistory.length + 1) {
+      const messageArray = session.map((dose) => {
+        return(`${dose.pill.name} ${dose.pill.dosage}${dose.pill.unit} x ${dose.quantity}`)
+      })
+      const message = messageArray.join('\n')
+      showMessage({
+        message: 'Pills Taken!',
+        description: message,
+        type: 'success'
+      })
+    } else {
+      showMessage({
+        message: 'Pill Taken Error',
+        description: "",
+        type: 'danger'
+      })
+    }
   }
 
   const sortPills = (pillList: Pill[]) => {
@@ -151,6 +182,7 @@ function App(): React.JSX.Element {
       <TouchableOpacity style={styles.styleChanger} onPress={() => setNewStyle(!newStyle)}>
         <Text style={styles.styleChangerText}>Change Style</Text>
       </TouchableOpacity>
+      <FlashMessage position={'top'} />
     </SafeAreaView>
   );
 }

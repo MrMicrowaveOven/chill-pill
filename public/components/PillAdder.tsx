@@ -5,7 +5,7 @@ import Button from "./Button";
 
 type PillAdderProps = PropsWithChildren<{
     addPill: Function;
-  }>;
+}>;
 
 const PillAdder = ({addPill}: PillAdderProps) => {
     const [name, setName] = useState("")
