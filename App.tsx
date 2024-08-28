@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   SafeAreaView,
@@ -25,10 +25,13 @@ function App(): React.JSX.Element {
   const [pillTakerOpen, setPillTakerOpen] = useState(false)
   const [pillHistoryOpen, setPillHistoryOpen] = useState(false)
   const [pillHistory, setPillHistory] = useMMKVStorage<SessionDate[]>('pillHistory', storage, [])
+  const [historyReverse, setHistoryReverse] = useMMKVStorage<boolean>('historyReverse', storage, false)
   const [newStyle, setNewStyle] = useMMKVStorage<boolean>('newStyle', storage, false)
 
   // setPills([])
   // setPillTrash([])
+  // setPillHistory([])
+  // setHistoryReverse(false)
   const addPill = (name: string, dosage : number, unit : string) => {
     const pill = {
       name: name,
@@ -71,10 +74,15 @@ function App(): React.JSX.Element {
       date: new Date()
     }
     const oldPillHistory = pillHistory
-    const newPillHitory = oldPillHistory.concat([pillSwallow])
-    setPillHistory(newPillHitory)
+    let newPillHistory = []
+    if (historyReverse) {
+      newPillHistory = oldPillHistory.concat([pillSwallow])
+    } else {
+      newPillHistory = [pillSwallow].concat(oldPillHistory)
+    }
+    setPillHistory(newPillHistory)
     setPillTakerOpen(false)
-    if(newPillHitory.length === oldPillHistory.length + 1) {
+    if(newPillHistory.length === oldPillHistory.length + 1) {
       const messageArray = session.map((dose) => {
         return(`${dose.pill.name} ${dose.pill.dosage}${dose.pill.unit} x ${dose.quantity}`)
       })
@@ -146,6 +154,20 @@ function App(): React.JSX.Element {
     setTimeout(() => setPillAdderOpen(true), 200)
   }
 
+  useEffect(() => {
+    sortHistoryByDate()
+  }, [historyReverse])
+
+  const sortHistoryByDate = () => {
+    const oldPillHistory = pillHistory
+    const newPillHistory = oldPillHistory.sort((a: SessionDate, b: SessionDate) =>
+      historyReverse
+        ? (new Date(a.date)).getTime() - (new Date(b.date)).getTime()
+        : (new Date(b.date)).getTime() - (new Date(a.date)).getTime()
+    )
+    setPillHistory(newPillHistory)
+  }
+
   return (
     <SafeAreaView style={styles.app}>
       <TouchableOpacity style={[styles.box, styles.one, newStyle && styles.box2, newStyle && styles.one2]} onPress={() => setPillAdderOpen(true)}><Text style={styles.boxText}>Add a Pill</Text></TouchableOpacity>
@@ -177,6 +199,8 @@ function App(): React.JSX.Element {
       <PillModal isVisible={pillHistoryOpen} closeWindow={() => setPillHistoryOpen(false)} name={"Pill History"}>
         <PillHistory
           pillHistory={pillHistory}
+          historyreverse={historyReverse}
+          reverseHistory={() => setHistoryReverse(!historyReverse)}
         />
       </PillModal>
       <TouchableOpacity style={styles.styleChanger} onPress={() => setNewStyle(!newStyle)}>

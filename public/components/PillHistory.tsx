@@ -1,14 +1,16 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import type {PropsWithChildren} from 'react';
 import { SessionDate } from '../types'
 import Button from "./Button";
 
 type PillHistoryProps = PropsWithChildren<{
-    pillHistory: SessionDate[]
+    pillHistory: SessionDate[];
+    historyreverse: boolean;
+    reverseHistory: Function;
 }>;
 
-const PillHistory = ({pillHistory}: PillHistoryProps) => {
+const PillHistory = ({pillHistory, historyreverse, reverseHistory}: PillHistoryProps) => {
     const downloadHistory = () => {
         console.log(pillHistory)
     }
@@ -35,6 +37,11 @@ const PillHistory = ({pillHistory}: PillHistoryProps) => {
                     </Text>
                 </ScrollView>
             </View>
+            <TouchableOpacity style={styles.reverseHistoryButton} onPress={() => reverseHistory()}>
+                <Text style={styles.reverseHistoryButtonText}>
+                    {historyreverse ? 'Old → New' : 'New → Old'}
+                </Text>
+            </TouchableOpacity>
             <View style={styles.downloadHistoryButton}>
                 <Button title="Download Pill History" onPress={() => downloadHistory()}></Button>
             </View>
@@ -79,6 +86,14 @@ const styles = StyleSheet.create({
     dateText: {
         color: "black",
         fontSize: 20
+    },
+    reverseHistoryButton: {
+        position: 'absolute',
+        top: 100,
+        left: 10,
+    },
+    reverseHistoryButtonText: {
+        color: 'blue'
     },
     downloadHistoryButton: {
         position: 'absolute',
