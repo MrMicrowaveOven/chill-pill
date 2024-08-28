@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     },
     reverseHistoryButton: {
         position: 'absolute',
-        top: 100,
+        top: 95,
         left: 10,
     },
     reverseHistoryButtonText: {
