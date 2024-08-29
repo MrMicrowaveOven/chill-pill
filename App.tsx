@@ -27,7 +27,7 @@ function App(): React.JSX.Element {
   const [pillTakerOpen, setPillTakerOpen] = useMMKVStorage<boolean>('pillTakerOpen', storage, false)
   const [pillHistoryOpen, setPillHistoryOpen] = useMMKVStorage<boolean>('pillHistoryOpen', storage, false)
   const [pillHistory, setPillHistory] = useMMKVStorage<SessionDate[]>('pillHistory', storage, [])
-  const [historyTrash, setHistoryTrash] = useMMKVStorage<SessionDate[]>('historyTrash', storage, [])
+  const [historyTrash, setHistoryTrash] = useMMKVStorage<SessionDate[][]>('historyTrash', storage, [])
   const [historyReverse, setHistoryReverse] = useMMKVStorage<boolean>('historyReverse', storage, false)
   const [newStyle, setNewStyle] = useMMKVStorage<boolean>('newStyle', storage, false)
   const [settingsWindowOpen, setSettingsWindowOpen] = useState(false)
@@ -174,7 +174,7 @@ function App(): React.JSX.Element {
 
   const resetPillHistory = () => {
     const oldPillHistory = pillHistory
-    setHistoryTrash(oldPillHistory)
+    setHistoryTrash(historyTrash.concat(oldPillHistory))
     setPillHistory([])
   }
 
