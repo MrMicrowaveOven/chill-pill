@@ -60,7 +60,8 @@ function App(): React.JSX.Element {
         showMessage({
           message: 'Pill Added!',
           description: `${pill.name} ${pill.dosage}${pill.unit}`,
-          type: 'success'
+          type: 'warning',
+          duration: 5000,
         })
       } else {
         showMessage({
@@ -94,7 +95,8 @@ function App(): React.JSX.Element {
       showMessage({
         message: 'Pills Taken!',
         description: message,
-        type: 'success'
+        type: 'warning',
+        duration: 5000,
       })
     } else {
       showMessage({
@@ -225,7 +227,7 @@ function App(): React.JSX.Element {
         setHistoryReverse={(isHistoryReverse: boolean) => setHistoryReverse(isHistoryReverse)}
         resetHistory={() => resetPillHistory()}
       />
-      <FlashMessage position={'top'} />
+      <FlashMessage position={'bottom'} />
     </SafeAreaView>
   );
 }
