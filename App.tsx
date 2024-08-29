@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
+  Image,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -15,6 +16,7 @@ import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
 import { Pill, Dose, SessionDate } from './public/types'
 import FlashMessage, { showMessage } from "react-native-flash-message";
+import SettingsWindow from './public/components/SettingsWindow';
 
 function App(): React.JSX.Element {
   // const [pills, setPills] = useState<Pill[]>([])
@@ -25,8 +27,10 @@ function App(): React.JSX.Element {
   const [pillTakerOpen, setPillTakerOpen] = useState(false)
   const [pillHistoryOpen, setPillHistoryOpen] = useState(false)
   const [pillHistory, setPillHistory] = useMMKVStorage<SessionDate[]>('pillHistory', storage, [])
+  const [historyTrash, setHistoryTrash] = useMMKVStorage<SessionDate[]>('historyTrash', storage, [])
   const [historyReverse, setHistoryReverse] = useMMKVStorage<boolean>('historyReverse', storage, false)
   const [newStyle, setNewStyle] = useMMKVStorage<boolean>('newStyle', storage, false)
+  const [settingsWindowOpen, setSettingsWindowOpen] = useState(false)
 
   // setPills([])
   // setPillTrash([])
@@ -168,6 +172,12 @@ function App(): React.JSX.Element {
     setPillHistory(newPillHistory)
   }
 
+  const resetPillHistory = () => {
+    const oldPillHistory = pillHistory
+    setHistoryTrash(oldPillHistory)
+    setPillHistory([])
+  }
+
   return (
     <SafeAreaView style={styles.app}>
       <TouchableOpacity style={[styles.box, styles.one, newStyle && styles.box2, newStyle && styles.one2]} onPress={() => setPillAdderOpen(true)}><Text style={styles.boxText}>Add a Pill</Text></TouchableOpacity>
@@ -203,9 +213,18 @@ function App(): React.JSX.Element {
           reverseHistory={() => setHistoryReverse(!historyReverse)}
         />
       </PillModal>
-      <TouchableOpacity style={styles.styleChanger} onPress={() => setNewStyle(!newStyle)}>
-        <Text style={styles.styleChangerText}>Change Style</Text>
+      <TouchableOpacity onPress={() => setSettingsWindowOpen(true)} style={styles.settingsWindowOpen}>
+        <Image style={styles.settingsWindowOpenIcon} source={require('./public/images/settingsIcon.png')} />
       </TouchableOpacity>
+      <SettingsWindow
+        isVisible={settingsWindowOpen}
+        exit={() => setSettingsWindowOpen(false)}
+        newStyle={newStyle}
+        setNewStyle={(isNewStyle: boolean) => setNewStyle(isNewStyle)}
+        historyReverse={historyReverse}
+        setHistoryReverse={(isHistoryReverse: boolean) => setHistoryReverse(isHistoryReverse)}
+        resetHistory={() => resetPillHistory()}
+      />
       <FlashMessage position={'top'} />
     </SafeAreaView>
   );
@@ -215,6 +234,17 @@ const styles = StyleSheet.create({
   app: {
     width: "100%",
     height: "100%"
+  },
+  settingsWindowOpen: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    width: 40,
+    height: 40,
+  },
+  settingsWindowOpenIcon: {
+    width: 40,
+    height: 40,
   },
   box: {
     position: "absolute",

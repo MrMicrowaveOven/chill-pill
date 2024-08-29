@@ -37,11 +37,9 @@ const PillHistory = ({pillHistory, historyreverse, reverseHistory}: PillHistoryP
                     </Text>
                 </ScrollView>
             </View>
-            <TouchableOpacity style={styles.reverseHistoryButton} onPress={() => reverseHistory()}>
-                <Text style={styles.reverseHistoryButtonText}>
-                    {historyreverse ? 'Old → New' : 'New → Old'}
-                </Text>
-            </TouchableOpacity>
+            <Text style={styles.isReverseHistoryLabel}>
+                {historyreverse ? 'Old → New' : 'New → Old'}
+            </Text>
             <View style={styles.downloadHistoryButton}>
                 <Button title="Download Pill History" onPress={() => downloadHistory()}></Button>
             </View>
@@ -87,13 +85,11 @@ const styles = StyleSheet.create({
         color: "black",
         fontSize: 20
     },
-    reverseHistoryButton: {
+    isReverseHistoryLabel: {
         position: 'absolute',
         top: 95,
         left: 10,
-    },
-    reverseHistoryButtonText: {
-        color: 'blue'
+        color: 'black'
     },
     downloadHistoryButton: {
         position: 'absolute',
