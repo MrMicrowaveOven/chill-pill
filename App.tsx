@@ -62,7 +62,15 @@ function App(): React.JSX.Element {
           description: `${pill.name} ${pill.dosage}${pill.unit}`,
           type: 'warning',
           duration: 5000,
-          animationDuration: 400
+          animationDuration: 400,
+          titleStyle: {
+            fontSize: 20,
+            color: 'black',
+          },
+          textStyle: {
+            fontSize: 18,
+            color: 'black'
+          }
         })
       } else {
         showMessage({
@@ -99,6 +107,14 @@ function App(): React.JSX.Element {
         type: 'warning',
         duration: 5000,
         animationDuration: 400,
+        titleStyle: {
+          fontSize: 20,
+          color: 'black',
+        },
+        textStyle: {
+          fontSize: 18,
+          color: 'black'
+        }
       })
     } else {
       showMessage({
