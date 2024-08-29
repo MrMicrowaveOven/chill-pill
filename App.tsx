@@ -245,7 +245,7 @@ function App(): React.JSX.Element {
         setHistoryReverse={(isHistoryReverse: boolean) => setHistoryReverse(isHistoryReverse)}
         resetHistory={() => resetPillHistory()}
       />
-      <FlashMessage position={'bottom'} />
+      <FlashMessage position={'center'} />
     </SafeAreaView>
   );
 }
