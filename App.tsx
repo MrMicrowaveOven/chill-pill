@@ -62,6 +62,7 @@ function App(): React.JSX.Element {
           description: `${pill.name} ${pill.dosage}${pill.unit}`,
           type: 'warning',
           duration: 5000,
+          animationDuration: 400
         })
       } else {
         showMessage({
@@ -97,6 +98,7 @@ function App(): React.JSX.Element {
         description: message,
         type: 'warning',
         duration: 5000,
+        animationDuration: 400,
       })
     } else {
       showMessage({
