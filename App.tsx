@@ -231,6 +231,7 @@ function App(): React.JSX.Element {
           pillHistory={pillHistory}
           historyreverse={historyReverse}
           reverseHistory={() => setHistoryReverse(!historyReverse)}
+          pillList={pills}
         />
       </PillModal>
       <TouchableOpacity onPress={() => setSettingsWindowOpen(true)} style={styles.settingsWindowOpen}>
