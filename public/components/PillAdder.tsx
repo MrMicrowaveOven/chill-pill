@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import type {PropsWithChildren} from 'react';
 import Button from "./Button";
@@ -11,20 +11,34 @@ const PillAdder = ({addPill}: PillAdderProps) => {
     const [name, setName] = useState("")
     const [dosage, setDosage] = useState(0)
     const [unit, setUnit] = useState("mg")
+
+    const doseInput = useRef<TextInput>(null);
     return (
         <View style={styles.window}>
             <View style={styles.addPillForm}>
                 <View style={styles.input}>
                     <Text style={styles.inputLabel}>Name of Medication</Text>
                     <View style={styles.inputTextBorder}>
-                        <TextInput maxLength={22} style={styles.inputText} onChangeText={(name) => setName(name)}></TextInput>
+                        <TextInput
+                            autoFocus={true}
+                            maxLength={22}
+                            style={styles.inputText}
+                            onChangeText={(name) => setName(name)}
+                            onSubmitEditing={() => doseInput.current?.focus()}
+                        />
                     </View>
                 </View>
                 <View style={styles.input}>
                     <Text style={styles.inputLabel}>Dosage</Text>
                     <View style={styles.inputDosage}>
                         <View style={[styles.inputTextBorder, styles.inputDosageBorder]}>
-                            <TextInput maxLength={8} style={styles.inputText} onChangeText={(dosage) => setDosage(parseFloat(dosage))} keyboardType='numeric'></TextInput>
+                            <TextInput
+                                maxLength={8}
+                                style={styles.inputText}
+                                onChangeText={(dosage) => setDosage(parseFloat(dosage))}
+                                keyboardType='numeric'
+                                ref={doseInput}
+                            ></TextInput>
                         </View>
                         <Text style={styles.mgDisplay}>mg</Text>
                     </View>
@@ -56,9 +70,7 @@ const styles = StyleSheet.create({
         width: "80%",
         marginTop: 120
     },
-    input: {
-
-    },
+    input: {},
     inputLabel: {
         color: "black",
         fontSize: 30,
