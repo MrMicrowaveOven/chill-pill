@@ -73,7 +73,7 @@ const PillHistory = ({pillHistory, historyreverse, reverseHistory, pillList}: Pi
                             </TouchableOpacity>
                     }
                 </View>
-                <ScrollView style={[styles.historyScroll, filterOptionsOpen && {marginTop: 80}]}>
+                <ScrollView style={[styles.historyScroll, filterOptionsOpen && {marginTop: 70}]}>
                     <Text selectable={true}>
                     {pillHistoryDisplay.map((sessionDate: SessionDate, index) => {
                         const { session } = sessionDate
@@ -109,14 +109,23 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
-    isReverseHistoryLabel: {},
-    openFilterButton: {
-        color: 'blue'
+    isReverseHistoryLabel: {
+        color: 'black'
     },
-    closeFilterButton: {},
+    openFilterButton: {
+        color: 'blue',
+    },
+    closeFilterButton: {
+        color: 'black',
+        padding: 5,
+        fontSize: 20
+    },
     filterContainer: {
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
         zIndex: 100,
     },
     filterDropdownContainer: {},
