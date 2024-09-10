@@ -158,16 +158,8 @@ function App(): React.JSX.Element {
       'Empty Trash',
       'Are you sure you want to empty your trash?',
       [
-        {
-          text: 'Cancel',
-          style: 'cancel'
-        },
-        {
-          text: 'OK',
-          onPress: () => {
-            setPillTrash([])
-          }
-        }
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'OK', onPress: () => { setPillTrash([]) } }
       ]
     );
   }
@@ -192,7 +184,7 @@ function App(): React.JSX.Element {
     setPillHistory(newPillHistory)
   }
 
-  const resetPillHistory = () => {
+  const clearPillHistory = () => {
     const oldPillHistory = pillHistory
     setHistoryTrash(historyTrash.concat(oldPillHistory))
     setPillHistory([])
@@ -200,10 +192,31 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={styles.app}>
-      <TouchableOpacity style={[styles.box, styles.one, newStyle && styles.box2, newStyle && styles.one2]} onPress={() => setPillAdderOpen(true)}><Text style={styles.boxText}>Add a Pill</Text></TouchableOpacity>
-      <TouchableOpacity style={[styles.box, newStyle ? styles.three : styles.two, newStyle && styles.box2, newStyle && styles.two2]} onPress={() => setPillTakerOpen(true)}><Text style={styles.boxText}>Take a Pill</Text></TouchableOpacity>
-      <TouchableOpacity style={[styles.box, newStyle ? styles.two : styles.three, newStyle && styles.box2, newStyle && styles.three2]} onPress={() => setPillManagerOpen(true)}><Text style={styles.boxText}>Manage Pills</Text></TouchableOpacity>
-      <TouchableOpacity style={[styles.box, styles.four, newStyle && styles.box2, newStyle && styles.four2]} onPress={() => setPillHistoryOpen(true)}><Text style={styles.boxText}>Pill History</Text></TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.box, styles.one, newStyle && styles.box2, newStyle && styles.one2]}
+        onPress={() => setPillAdderOpen(true)}
+      >
+        <Text style={styles.boxText}>Add a Pill</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.box, newStyle ? styles.three : styles.two, newStyle && styles.box2, newStyle && styles.two2]}
+        onPress={() => setPillTakerOpen(true)}
+      >
+        <Text style={styles.boxText}>Take a Pill</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.box, newStyle ? styles.two : styles.three, newStyle && styles.box2, newStyle && styles.three2]}
+        onPress={() => setPillManagerOpen(true)}
+      >
+        <Text style={styles.boxText}>Manage Pills</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.box, styles.four, newStyle && styles.box2, newStyle && styles.four2]}
+        onPress={() => setPillHistoryOpen(true)}
+      >
+        <Text style={styles.boxText}>Pill History</Text>
+      </TouchableOpacity>
+
       <PillModal isVisible={pillAdderOpen} closeWindow={() => setPillAdderOpen(false)} name={"Add a Pill"}>
         <PillAdder
           addPill={(name: string, dosage: number, unit: string) => addPill(name, dosage, unit)}
@@ -230,7 +243,6 @@ function App(): React.JSX.Element {
         <PillHistory
           pillHistory={pillHistory}
           historyreverse={historyReverse}
-          reverseHistory={() => setHistoryReverse(!historyReverse)}
           pillList={pills}
         />
       </PillModal>
@@ -244,7 +256,7 @@ function App(): React.JSX.Element {
         setNewStyle={(isNewStyle: boolean) => setNewStyle(isNewStyle)}
         historyReverse={historyReverse}
         setHistoryReverse={(isHistoryReverse: boolean) => setHistoryReverse(isHistoryReverse)}
-        resetHistory={() => resetPillHistory()}
+        resetHistory={() => clearPillHistory()}
       />
       <FlashMessage position={'center'} />
     </SafeAreaView>

@@ -8,11 +8,10 @@ import DropDownPicker from "react-native-dropdown-picker";
 type PillHistoryProps = PropsWithChildren<{
     pillHistory: SessionDate[];
     historyreverse: boolean;
-    reverseHistory: Function;
     pillList: Pill[];
 }>;
 
-const PillHistory = ({pillHistory, historyreverse, reverseHistory, pillList}: PillHistoryProps) => {
+const PillHistory = ({pillHistory, historyreverse, pillList}: PillHistoryProps) => {
     const [filterOptionsOpen, setFilterOptionsOpen] = useState<boolean>(false)
     const [filterPickerOpen, setFilterPickerOpen] = useState<boolean>(false)
     const [pills, setPills] = useState(pillList.map((pill, index) => {
