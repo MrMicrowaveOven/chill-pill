@@ -1,0 +1,11 @@
+Here is your requested PillHistory!
+<br><br>
+{{#pillHistory}}
+{{date}}
+<br>
+{{#session}}
+{{pill.name}}, {{pill.dosage}}{{pill.unit}} X {{quantity}}
+<br>
+{{/session}}
+{{/pillHistory}}
+<script></script>
