@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        zIndex: 100,
     },
     filterDropdownContainer: {},
     history: {
