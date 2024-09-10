@@ -39,34 +39,41 @@ const PillHistory = ({pillHistory, historyreverse, reverseHistory, pillList}: Pi
 
     return (
         <View style={styles.window}>
-            <View style={styles.history}>
-                {filterOptionsOpen
-                    ?   <View style={styles.filterContainer}>
-                            <TouchableOpacity onPress={() => {setFilterOptionsOpen(false); setFilterValue(null)}}>
-                                <Text style={styles.closeFilterButton}>
-                                    ✖
+            <View style={[styles.history, {marginTop: 80}]}>
+                <View style={{width: '80%', height: 20, display: 'flex', justifyContent: 'space-between',
+                    flexDirection: filterOptionsOpen ? 'column': 'row',
+                }}>
+                    <Text style={styles.isReverseHistoryLabel}>
+                        {historyreverse ? 'Old → New' : 'New → Old'}
+                    </Text>
+                    {filterOptionsOpen
+                        ?   <View style={[styles.filterContainer, {marginTop: 10}]}>
+                                <TouchableOpacity onPress={() => {setFilterOptionsOpen(false); setFilterValue(null)}}>
+                                    <Text style={styles.closeFilterButton}>
+                                        ✖
+                                    </Text>
+                                </TouchableOpacity>
+                                <View style={styles.filterDropdownContainer}>
+                                    <DropDownPicker
+                                        open={filterPickerOpen}
+                                        setOpen={setFilterPickerOpen}
+                                        items={pills}
+                                        setItems={setPills}
+                                        value={filterValue}
+                                        setValue={setFilterValue}
+                                        placeholder={'Filter by Pill'}
+                                        textStyle={{fontSize: 20}}
+                                    />
+                                </View>
+                            </View>
+                        :   <TouchableOpacity onPress={() => setFilterOptionsOpen(true)}>
+                                <Text style={styles.openFilterButton}>
+                                    Filter
                                 </Text>
                             </TouchableOpacity>
-                            <View style={styles.filterDropdownContainer}>
-                                <DropDownPicker
-                                    open={filterPickerOpen}
-                                    setOpen={setFilterPickerOpen}
-                                    items={pills}
-                                    setItems={setPills}
-                                    value={filterValue}
-                                    setValue={setFilterValue}
-                                    placeholder={'Filter by Pill'}
-                                    textStyle={{fontSize: 20}}
-                                />
-                            </View>
-                        </View>
-                    :   <TouchableOpacity onPress={() => setFilterOptionsOpen(true)}>
-                            <Text style={styles.openFilterButton}>
-                                Filter
-                            </Text>
-                        </TouchableOpacity>
-                }
-                <ScrollView style={styles.historyScroll}>
+                    }
+                </View>
+                <ScrollView style={[styles.historyScroll, filterOptionsOpen && {marginTop: 80}]}>
                     <Text selectable={true}>
                     {pillHistoryDisplay.map((sessionDate: SessionDate, index) => {
                         const { session } = sessionDate
@@ -86,9 +93,6 @@ const PillHistory = ({pillHistory, historyreverse, reverseHistory, pillList}: Pi
                     </Text>
                 </ScrollView>
             </View>
-            <Text style={styles.isReverseHistoryLabel}>
-                {historyreverse ? 'Old → New' : 'New → Old'}
-            </Text>
             <View style={styles.downloadHistoryButton}>
                 <Button title="Download Pill History" onPress={() => downloadHistory()}></Button>
             </View>
@@ -105,16 +109,18 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
+    isReverseHistoryLabel: {},
+    openFilterButton: {
+        color: 'blue'
+    },
     closeFilterButton: {},
     filterContainer: {
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        zIndex: 100,
     },
-    filterDropdownContainer: {
-        width: '100%'
-    },
+    filterDropdownContainer: {},
     history: {
-        marginTop: 120,
         width: '100%',
         height: '70%',
         display: 'flex',
@@ -141,18 +147,6 @@ const styles = StyleSheet.create({
     dateText: {
         color: "black",
         fontSize: 20
-    },
-    isReverseHistoryLabel: {
-        position: 'absolute',
-        top: 95,
-        left: 10,
-        color: 'black'
-    },
-    openFilterButton: {
-        // position: 'absolute',
-        // top: 95,
-        // right: 10,
-        // color: 'black'
     },
     downloadHistoryButton: {
         position: 'absolute',
