@@ -111,10 +111,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: 'black',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        backgroundColor: 'darkgray',
     },
     container: {
         width: '100%',
-        backgroundColor: 'darkgray',
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
