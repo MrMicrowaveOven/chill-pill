@@ -17,6 +17,7 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
     const [emailEditable, setEmailEditable] = useState<boolean>(false)
     const emailEdit = useRef<TextInput>(null)
     const [userEmail, setUserEmail] = useMMKVStorage<string>('userEmail', storage, '')
+    const [sendEmailButtonDisabled, setSendEmailButtonDisabled] = useState<boolean>(false)
     const [emailConfirmation, setEmailConfirmation] = useState<boolean>(false)
     const [emailFailure, setEmailFailure] = useState<boolean>(false)
 
@@ -31,15 +32,18 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
         if(emailConfirmation) {
             setTimeout(() => {
                 setEmailConfirmation(false)
+                setSendEmailButtonDisabled(false)
             }, 5000)
         }
     }, [emailConfirmation])
 
     useEffect(() => {
         setEmailFailure(false)
+        setSendEmailButtonDisabled(false)
     }, [emailEditable, show])
 
     const sendEmail = () => {
+        setSendEmailButtonDisabled(true)
         emailjs.send(
             REACT_APP_EMAIL_SERVICE_ID,
             REACT_APP_EMAIL_TEMPLATE_ID,
@@ -85,7 +89,7 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
                     <Button
                         title='Send email'
                         onPress={() => {sendEmail()}}
-                        disabled={emailEditable}
+                        disabled={emailEditable || sendEmailButtonDisabled}
                     />
                     {emailConfirmation && <Text style={styles.emailConfirmationText}>{`Email sent to ${userEmail}`}</Text>}
                     {emailFailure && <Text style={styles.emailFailureText}>{`Email failed.`}</Text>}
