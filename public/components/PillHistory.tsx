@@ -139,17 +139,18 @@ const styles = StyleSheet.create({
     filterDropdownContainer: {},
     history: {
         width: '100%',
-        height: '70%',
         display: 'flex',
+        flex: 1,
         flexDirection: 'column',
         alignItems: 'center'
     },
     historyScroll: {
         width: '90%',
-        height: '80%',
+        flex: 1,
         borderWidth: 1,
         borderStyle: 'solid',
-        borderColor: 'darkgray'
+        borderColor: 'darkgray',
+        marginBottom: 70,
     },
     swallow: {
         color: "black"

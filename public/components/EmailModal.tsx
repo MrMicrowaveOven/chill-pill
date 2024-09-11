@@ -1,10 +1,11 @@
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
-import { Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
+import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
-import emailjs from '@emailjs/react-native';
+import emailjs, { send } from '@emailjs/react-native';
 import {REACT_APP_EMAIL_SERVICE_ID, REACT_APP_EMAIL_TEMPLATE_ID, REACT_APP_EMAIL_USER_ID} from '@env';
 import { SessionDate } from '../types';
+import Button from './Button';
 
 type EmailModalProps = PropsWithChildren<{
     pillHistory: SessionDate[];
@@ -41,16 +42,17 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
     }
 
     return (
-            <Modal animationType='slide' visible={show} transparent={true}>
-                <Text>Email my Pill History</Text>
+        <Modal animationType='slide' visible={show} transparent={true}>
+            <View style={styles.modal}>
                 <TouchableWithoutFeedback onPress={() => close()}>
                     <View style={styles.exitButton}>
                         <Text style={styles.exitButtonText}>✖</Text>
                     </View>
                 </TouchableWithoutFeedback>
-                <View style={styles.emailSection}>
+                <View style={styles.container}>
+                    <Text style={styles.title}>Email my Pill History</Text>
                     <TouchableOpacity onPress={() => setEmailEditable(!emailEditable)}>
-                        <Text style={styles.editEmailButton}>{emailEditable ? 'save' : 'edit'}</Text>
+                        <Text style={styles.editEmailButton}>{emailEditable ? 'save' : 'edit email'}</Text>
                     </TouchableOpacity>
                     <View style={styles.emailInputBorder}>
                         <TextInput
@@ -62,23 +64,38 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
                             keyboardType='email-address'
                         />
                     </View>
-                    <TouchableOpacity onPress={() => {sendEmail(); close()}} style={styles.sendEmailButton}>
-                        <Image style={styles.sendEmailImage} source={require("../images/sendEmailIcon.png")}/>
-                    </TouchableOpacity>
+                    <Button
+                        title='Send email'
+                        onPress={() => {sendEmail(); close()}}
+                        disabled={emailEditable}
+                    />
                 </View>
-            </Modal>
+            </View>
+        </Modal>
     )
 }
 
 const styles = StyleSheet.create({
+    modal: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'absolute',
+        bottom: 0,
+    },
     container: {
-        // position: 'absolute',
-        // bottom: 400,
-        // backgroundColor: 'darkgray',
+        width: '100%',
+        backgroundColor: 'darkgray',
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingBottom: 20,
     },
     exitButton: {
         position: "absolute",
-        bottom: 250,
+        top: 0,
         right: 10,
         zIndex: 100,
     },
@@ -86,16 +103,10 @@ const styles = StyleSheet.create({
         fontSize: 35,
         color: "black"
     },
-    emailSection: {
-        height: 300,
-        position: 'absolute',
-        bottom: 0,
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: 'gray'
+    title: {
+        fontSize: 30,
+        padding: 20,
+        color: 'black'
     },
     editEmailButton: {
         fontSize: 20,
@@ -103,6 +114,7 @@ const styles = StyleSheet.create({
         color: 'blue'
     },
     emailInputBorder: {
+        width: '90%',
         flex: 1,
         margin: 20,
         borderColor: "black",
@@ -110,14 +122,9 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
     },
     emailInput: {
-        width: '100%',
         fontSize: 30,
         backgroundColor: "white",
     },
-    sendEmailButton: {
-        marginRight: 10,
-    },
-    sendEmailImage: {},
 })
 
 export default EmailModal
