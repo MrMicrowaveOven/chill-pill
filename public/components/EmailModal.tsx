@@ -17,11 +17,27 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
     const [emailEditable, setEmailEditable] = useState<boolean>(false)
     const emailEdit = useRef<TextInput>(null)
     const [userEmail, setUserEmail] = useMMKVStorage<string>('userEmail', storage, '')
+    const [emailConfirmation, setEmailConfirmation] = useState<boolean>(false)
+    const [emailFailure, setEmailFailure] = useState<boolean>(false)
 
     useEffect(() => {
         if(emailEditable) emailEdit.current?.focus()},
         [emailEditable]
     )
+
+    useEffect(() => setEmailEditable(false), [show])
+
+    useEffect(() => {
+        if(emailConfirmation) {
+            setTimeout(() => {
+                setEmailConfirmation(false)
+            }, 5000)
+        }
+    }, [emailConfirmation])
+
+    useEffect(() => {
+        setEmailFailure(false)
+    }, [emailEditable, show])
 
     const sendEmail = () => {
         emailjs.send(
@@ -34,10 +50,12 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
             { publicKey: REACT_APP_EMAIL_USER_ID },
           )
             .then((response) => {
-              console.log('SUCCESS!', response.status, response.text);
+                console.log('SUCCESS!', response.status, response.text);
+                setEmailConfirmation(true)
             })
             .catch((err) => {
-              console.log('FAILED...', err);
+                console.log('FAILED...', err);
+                setEmailFailure(true)
             });
     }
 
@@ -66,9 +84,11 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
                     </View>
                     <Button
                         title='Send email'
-                        onPress={() => {sendEmail(); close()}}
+                        onPress={() => {sendEmail()}}
                         disabled={emailEditable}
                     />
+                    {emailConfirmation && <Text style={styles.emailConfirmationText}>{`Email sent to ${userEmail}`}</Text>}
+                    {emailFailure && <Text style={styles.emailFailureText}>{`Email failed.`}</Text>}
                 </View>
             </View>
         </Modal>
@@ -125,6 +145,14 @@ const styles = StyleSheet.create({
         fontSize: 30,
         backgroundColor: "white",
     },
+    emailConfirmationText: {
+        color: 'blue',
+        fontSize: 20,
+    },
+    emailFailureText: {
+        color: 'red',
+        fontSize: 20,
+    }
 })
 
 export default EmailModal
