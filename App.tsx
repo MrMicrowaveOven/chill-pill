@@ -19,7 +19,6 @@ import FlashMessage, { showMessage } from "react-native-flash-message";
 import SettingsWindow from './public/components/SettingsWindow';
 
 function App(): React.JSX.Element {
-  // const [pills, setPills] = useState<Pill[]>([])
   const [pills, setPills] = useMMKVStorage<Pill[]>('pills', storage, [])
   const [pillTrash, setPillTrash] = useMMKVStorage<Pill[]>('pillTrash', storage, [])
   const [pillAdderOpen, setPillAdderOpen] = useMMKVStorage<boolean>('pillAdderOpen', storage, false)

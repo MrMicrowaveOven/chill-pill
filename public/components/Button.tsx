@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import { DimensionValue, StyleSheet, Text, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { DimensionValue, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 type ButtonProps = PropsWithChildren<{
     fontColor?: string;
