@@ -91,8 +91,10 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
                         onPress={() => {sendEmail()}}
                         disabled={emailEditable || sendEmailButtonDisabled}
                     />
-                    {emailConfirmation && <Text style={styles.emailConfirmationText}>{`Email sent to ${userEmail}`}</Text>}
-                    {emailFailure && <Text style={styles.emailFailureText}>{`Email failed.`}</Text>}
+                    <View style={styles.emailResponseText}>
+                        {emailConfirmation && <Text style={styles.emailConfirmationText}>{`Email sent to ${userEmail}`}</Text>}
+                        {emailFailure && <Text style={styles.emailFailureText}>{`Email failed.`}</Text>}
+                    </View>
                 </View>
             </View>
         </Modal>
@@ -115,7 +117,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingBottom: 20,
     },
     exitButton: {
         position: "absolute",
@@ -134,7 +135,6 @@ const styles = StyleSheet.create({
     },
     editEmailButton: {
         fontSize: 20,
-        marginLeft: 10,
         color: 'blue'
     },
     emailInputBorder: {
@@ -156,6 +156,14 @@ const styles = StyleSheet.create({
     emailFailureText: {
         color: 'red',
         fontSize: 20,
+    },
+    emailResponseText: {
+        height: 50,
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 })
 
