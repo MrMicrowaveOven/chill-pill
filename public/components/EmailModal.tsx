@@ -108,6 +108,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         position: 'absolute',
         bottom: 0,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'black',
     },
     container: {
         width: '100%',
