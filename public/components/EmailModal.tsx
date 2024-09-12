@@ -50,7 +50,7 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
                 const thirtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 30));
                 return new Date(sessionDate.date) > new Date(thirtyDaysAgo)
             }),
-            pillHistory.filter((sessionDate) => !sessionDate.dateEmailed)
+            // pillHistory.filter((sessionDate) => !sessionDate.dateEmailed)
         ][radioSelection]
         setSendEmailButtonDisabled(true)
         emailjs.send(
@@ -96,7 +96,7 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
                         />
                     </View>
                     <View style={styles.radios}>
-                        {[0,1,2].map((index) => {
+                        {[0,1].map((index) => {
                             return (
                                 <View style={styles.radioOption} key={index}>
                                     <TouchableOpacity onPress={() => setRadioSelection(index)}>
@@ -111,7 +111,7 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
                                     <Text style={styles.radioText}>{[
                                         'Send All Pill History',
                                         'Send Last 30 Days',
-                                        'Send all Unsent'
+                                        // 'Send all Unsent'
                                     ][index]}</Text>
                                 </View>
                             )
