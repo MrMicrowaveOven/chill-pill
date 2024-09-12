@@ -12,6 +12,7 @@ export type PillSwallow = {
 export type SessionDate = {
     date: Date;
     session: Dose[];
+    dateEmailed?: Date;
 }
 
 export type Dose = {

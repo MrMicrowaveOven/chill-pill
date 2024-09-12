@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
-import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
+import { Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
 import emailjs, { send } from '@emailjs/react-native';
@@ -17,6 +17,7 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
     const [emailEditable, setEmailEditable] = useState<boolean>(false)
     const emailEdit = useRef<TextInput>(null)
     const [userEmail, setUserEmail] = useMMKVStorage<string>('userEmail', storage, '')
+    const [radioSelection, setRadioSelection] = useState<number>(0)
     const [sendEmailButtonDisabled, setSendEmailButtonDisabled] = useState<boolean>(false)
     const [emailConfirmation, setEmailConfirmation] = useState<boolean>(false)
     const [emailFailure, setEmailFailure] = useState<boolean>(false)
@@ -43,13 +44,21 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
     }, [emailEditable, show])
 
     const sendEmail = () => {
+        const sendablePillHistory = [
+            pillHistory,
+            pillHistory.filter((sessionDate) => {
+                const thirtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 30));
+                return new Date(sessionDate.date) > new Date(thirtyDaysAgo)
+            }),
+            pillHistory.filter((sessionDate) => !sessionDate.dateEmailed)
+        ][radioSelection]
         setSendEmailButtonDisabled(true)
         emailjs.send(
             REACT_APP_EMAIL_SERVICE_ID,
             REACT_APP_EMAIL_TEMPLATE_ID,
             {
                 user_email: userEmail,
-                pillHistory: pillHistory
+                pillHistory: sendablePillHistory
             },
             { publicKey: REACT_APP_EMAIL_USER_ID },
           )
@@ -85,6 +94,28 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
                             inputMode='email'
                             keyboardType='email-address'
                         />
+                    </View>
+                    <View style={styles.radios}>
+                        {[0,1,2].map((index) => {
+                            return (
+                                <View style={styles.radioOption} key={index}>
+                                    <TouchableOpacity onPress={() => setRadioSelection(index)}>
+                                        <Image
+                                            style={styles.radioButton}
+                                            source={radioSelection === index
+                                                ? require(`../images/radioButtonChecked.png`)
+                                                : require(`../images/radioButtonUnchecked.png`)
+                                            }
+                                        />
+                                    </TouchableOpacity>
+                                    <Text style={styles.radioText}>{[
+                                        'Send All Pill History',
+                                        'Send Last 30 Days',
+                                        'Send all Unsent'
+                                    ][index]}</Text>
+                                </View>
+                            )
+                        })}
                     </View>
                     <Button
                         title='Send email'
@@ -153,6 +184,21 @@ const styles = StyleSheet.create({
     emailInput: {
         fontSize: 30,
         backgroundColor: "white",
+    },
+    radios: {
+        marginBottom: 10,
+    },
+    radioButton: {
+        marginRight: 5
+    },
+    radioOption: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        margin: 5,
+    },
+    radioText: {
+        color: 'black'
     },
     emailConfirmationText: {
         color: 'blue',
