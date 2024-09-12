@@ -50,7 +50,7 @@ const PillHistory = ({pillHistory, historyreverse, pillList}: PillHistoryProps) 
                     {filterOptionsOpen
                         ?   <View style={[styles.filterContainer, {marginTop: 10}]}>
                                 <TouchableOpacity onPress={() => {setFilterOptionsOpen(false); setFilterValue(null)}}>
-                                    <Text style={styles.closeFilterButton}>
+                                    <Text style={styles.closeFilterButton} allowFontScaling={false}>
                                         ✖
                                     </Text>
                                 </TouchableOpacity>

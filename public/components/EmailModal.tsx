@@ -68,7 +68,7 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
             <View style={styles.modal}>
                 <TouchableWithoutFeedback onPress={() => close()}>
                     <View style={styles.exitButton}>
-                        <Text style={styles.exitButtonText}>✖</Text>
+                        <Text style={styles.exitButtonText} allowFontScaling={false}>✖</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 <View style={styles.container}>

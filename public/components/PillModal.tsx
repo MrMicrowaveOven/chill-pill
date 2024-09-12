@@ -16,10 +16,10 @@ const PillModal = ({isVisible, closeWindow, name, backgroundColor, children}: Pi
                 <View style={[styles.window, {backgroundColor: backgroundColor || "lightgray"}]}>
                     <TouchableWithoutFeedback onPress={() => closeWindow()}>
                         <View style={styles.exitButton}>
-                            <Text style={styles.exitButtonText}>✖</Text>
+                            <Text style={styles.exitButtonText} allowFontScaling={false}>✖</Text>
                         </View>
                     </TouchableWithoutFeedback>
-                    <Text style={styles.title}>{name}</Text>
+                    <Text style={styles.title} allowFontScaling={false}>{name}</Text>
                     <View style={styles.children}>
                         {children}
                     </View>
