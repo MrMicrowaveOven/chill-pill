@@ -8,12 +8,12 @@ type SettingsWindowProps = PropsWithChildren<{
     exit: Function;
     newStyle: boolean;
     setNewStyle: Function;
-    historyReverse: boolean;
-    setHistoryReverse: Function;
+    historyIsReverse: boolean;
+    setHistoryIsReverse: Function;
     resetHistory: Function;
 }>;
 
-const SettingsWindow = ({isVisible, exit, newStyle, setNewStyle, historyReverse, setHistoryReverse, resetHistory}: SettingsWindowProps) => {
+const SettingsWindow = ({isVisible, exit, newStyle, setNewStyle, historyIsReverse, setHistoryIsReverse, resetHistory}: SettingsWindowProps) => {
     const ExitButton = () =>
         <TouchableOpacity style={styles.exitButton} onPress={() => exit()}>
             <Image source={require('../images/exit.png')} style={styles.exitButtonIcon}/>
@@ -60,8 +60,8 @@ const SettingsWindow = ({isVisible, exit, newStyle, setNewStyle, historyReverse,
                                 title='Pill History Order'
                                 leftLabel='New -> Old'
                                 rightLabel='Old -> New'
-                                onChange={(isChecked: boolean) => setHistoryReverse(isChecked)}
-                                defaultChecked={historyReverse}
+                                onChange={(isChecked: boolean) => setHistoryIsReverse(isChecked)}
+                                defaultChecked={historyIsReverse}
                             />
                             <View style={styles.clearPillHistory}>
                                 <Button title={'Clear Pill History'} onPress={() => confirmClearHistory()}/>

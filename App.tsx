@@ -27,14 +27,14 @@ function App(): React.JSX.Element {
   const [pillHistoryOpen, setPillHistoryOpen] = useMMKVStorage<boolean>('pillHistoryOpen', storage, false)
   const [pillHistory, setPillHistory] = useMMKVStorage<SessionDate[]>('pillHistory', storage, [])
   const [historyTrash, setHistoryTrash] = useMMKVStorage<SessionDate[][]>('historyTrash', storage, [])
-  const [historyReverse, setHistoryReverse] = useMMKVStorage<boolean>('historyReverse', storage, false)
+  const [historyIsReverse, setHistoryIsReverse] = useMMKVStorage<boolean>('historyIsReverse', storage, false)
   const [newStyle, setNewStyle] = useMMKVStorage<boolean>('newStyle', storage, false)
   const [settingsWindowOpen, setSettingsWindowOpen] = useState(false)
 
   // setPills([])
   // setPillTrash([])
   // setPillHistory([])
-  // setHistoryReverse(false)
+  // setHistoryIsReverse(false)
   const addPill = (name: string, dosage : number, unit : string) => {
     const pill = {
       name: name,
@@ -88,7 +88,7 @@ function App(): React.JSX.Element {
     }
     const oldPillHistory = pillHistory
     let newPillHistory = []
-    if (historyReverse) {
+    if (historyIsReverse) {
       newPillHistory = oldPillHistory.concat([pillSwallow])
     } else {
       newPillHistory = [pillSwallow].concat(oldPillHistory)
@@ -171,12 +171,12 @@ function App(): React.JSX.Element {
 
   useEffect(() => {
     sortHistoryByDate()
-  }, [historyReverse])
+  }, [historyIsReverse])
 
   const sortHistoryByDate = () => {
     const oldPillHistory = pillHistory
     const newPillHistory = oldPillHistory.sort((a: SessionDate, b: SessionDate) =>
-      historyReverse
+      historyIsReverse
         ? (new Date(a.date)).getTime() - (new Date(b.date)).getTime()
         : (new Date(b.date)).getTime() - (new Date(a.date)).getTime()
     )
@@ -241,7 +241,7 @@ function App(): React.JSX.Element {
       <PillModal isVisible={pillHistoryOpen} closeWindow={() => setPillHistoryOpen(false)} name={"Pill History"}>
         <PillHistory
           pillHistory={pillHistory}
-          historyreverse={historyReverse}
+          historyIsReverse={historyIsReverse}
           pillList={pills}
         />
       </PillModal>
@@ -253,8 +253,8 @@ function App(): React.JSX.Element {
         exit={() => setSettingsWindowOpen(false)}
         newStyle={newStyle}
         setNewStyle={(isNewStyle: boolean) => setNewStyle(isNewStyle)}
-        historyReverse={historyReverse}
-        setHistoryReverse={(isHistoryReverse: boolean) => setHistoryReverse(isHistoryReverse)}
+        historyIsReverse={historyIsReverse}
+        setHistoryIsReverse={(isHistoryIsReverse: boolean) => setHistoryIsReverse(isHistoryIsReverse)}
         resetHistory={() => clearPillHistory()}
       />
       <FlashMessage position={'center'} />

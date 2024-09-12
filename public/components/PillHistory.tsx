@@ -8,11 +8,11 @@ import EmailModal from "./EmailModal";
 
 type PillHistoryProps = PropsWithChildren<{
     pillHistory: SessionDate[];
-    historyreverse: boolean;
+    historyIsReverse: boolean;
     pillList: Pill[];
 }>;
 
-const PillHistory = ({pillHistory, historyreverse, pillList}: PillHistoryProps) => {
+const PillHistory = ({pillHistory, historyIsReverse, pillList}: PillHistoryProps) => {
     const [filterOptionsOpen, setFilterOptionsOpen] = useState<boolean>(false)
     const [filterPickerOpen, setFilterPickerOpen] = useState<boolean>(false)
     const [pills, setPills] = useState(pillList.map((pill, index) => {
@@ -45,7 +45,7 @@ const PillHistory = ({pillHistory, historyreverse, pillList}: PillHistoryProps) 
                     flexDirection: filterOptionsOpen ? 'column': 'row',
                 }}>
                     <Text style={styles.isReverseHistoryLabel}>
-                        {historyreverse ? 'Old → New' : 'New → Old'}
+                        {historyIsReverse ? 'Old → New' : 'New → Old'}
                     </Text>
                     {filterOptionsOpen
                         ?   <View style={[styles.filterContainer, {marginTop: 10}]}>
