@@ -9,10 +9,11 @@ import EmailModal from "./EmailModal";
 type PillHistoryProps = PropsWithChildren<{
     pillHistory: SessionDate[];
     historyIsReverse: boolean;
+    reverseHistory: Function;
     pillList: Pill[];
 }>;
 
-const PillHistory = ({pillHistory, historyIsReverse, pillList}: PillHistoryProps) => {
+const PillHistory = ({pillHistory, historyIsReverse, reverseHistory, pillList}: PillHistoryProps) => {
     const [filterOptionsOpen, setFilterOptionsOpen] = useState<boolean>(false)
     const [filterPickerOpen, setFilterPickerOpen] = useState<boolean>(false)
     const [pills, setPills] = useState(pillList.map((pill, index) => {
@@ -44,9 +45,11 @@ const PillHistory = ({pillHistory, historyIsReverse, pillList}: PillHistoryProps
                 <View style={{width: '80%', height: 20, display: 'flex', justifyContent: 'space-between',
                     flexDirection: filterOptionsOpen ? 'column': 'row',
                 }}>
-                    <Text style={styles.isReverseHistoryLabel}>
-                        {historyIsReverse ? 'Old → New' : 'New → Old'}
-                    </Text>
+                    <TouchableOpacity onPress={() => reverseHistory()}>
+                        <Text style={styles.isReverseHistoryLabel}>
+                            {historyIsReverse ? 'Old → New' : 'New → Old'}
+                        </Text>
+                    </TouchableOpacity>
                     {filterOptionsOpen
                         ?   <View style={[styles.filterContainer, {marginTop: 10}]}>
                                 <TouchableOpacity onPress={() => {setFilterOptionsOpen(false); setFilterValue(null)}}>
@@ -119,7 +122,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     isReverseHistoryLabel: {
-        color: 'black'
+        color: 'blue'
     },
     openFilterButton: {
         color: 'blue',

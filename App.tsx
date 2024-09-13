@@ -242,6 +242,7 @@ function App(): React.JSX.Element {
         <PillHistory
           pillHistory={pillHistory}
           historyIsReverse={historyIsReverse}
+          reverseHistory={() => setHistoryIsReverse(!historyIsReverse)}
           pillList={pills}
         />
       </PillModal>
@@ -254,7 +255,7 @@ function App(): React.JSX.Element {
         newStyle={newStyle}
         setNewStyle={(isNewStyle: boolean) => setNewStyle(isNewStyle)}
         historyIsReverse={historyIsReverse}
-        setHistoryIsReverse={(isHistoryIsReverse: boolean) => setHistoryIsReverse(isHistoryIsReverse)}
+        setHistoryIsReverse={(historyIsReverse: boolean) => setHistoryIsReverse(historyIsReverse)}
         resetHistory={() => clearPillHistory()}
       />
       <FlashMessage position={'center'} />
