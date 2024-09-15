@@ -113,23 +113,23 @@ const EmailModal = ({pillHistory, filteredPillHistory, show, close, markEmailsAs
                     <View style={styles.radios}>
                         {[0,1,2].map((index) => {
                             return (
-                                <View style={styles.radioOption} key={index}>
-                                    <TouchableOpacity onPress={() => setRadioSelection(index)}>
+                                <TouchableOpacity style={styles.radioButton} onPress={() => setRadioSelection(index)}>
+                                    <View style={styles.radioOption} key={index}>
                                         <Image
-                                            style={styles.radioButton}
+                                            style={styles.radioButtonIcon}
                                             source={radioSelection === index
                                                 ? require(`../images/radioButtonChecked.png`)
                                                 : require(`../images/radioButtonUnchecked.png`)
                                             }
                                         />
-                                    </TouchableOpacity>
-                                    <Text style={styles.radioText}>{[
-                                        'Send All Pill History',
-                                        'Send Last 30 Days',
-                                        'Send Filtered Pill History'
-                                        // 'Send all Unsent'
-                                    ][index]}</Text>
-                                </View>
+                                        <Text style={styles.radioText}>{[
+                                            'Send All Pill History',
+                                            'Send Last 30 Days',
+                                            'Send Filtered Pill History'
+                                            // 'Send all Unsent'
+                                        ][index]}</Text>
+                                    </View>
+                                </TouchableOpacity>
                             )
                         })}
                     </View>
@@ -204,7 +204,8 @@ const styles = StyleSheet.create({
     radios: {
         marginBottom: 10,
     },
-    radioButton: {
+    radioButton: {},
+    radioButtonIcon: {
         marginRight: 5
     },
     radioOption: {
