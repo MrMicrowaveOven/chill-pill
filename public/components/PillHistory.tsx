@@ -106,6 +106,7 @@ const PillHistory = ({pillHistory, historyIsReverse, reverseHistory, pillList, m
                 close={() => setEmailSectionOpen(false)}
                 pillHistory={pillHistory}
                 markEmailsAsSent={(toMarkSent: number[]) => markEmailsAsSent(toMarkSent)}
+                filteredPillHistory={pillHistoryDisplay}
             />
             <TouchableOpacity onPress={() => setEmailSectionOpen(true)} style={styles.openEmailSectionButton}>
                 <Image style={styles.openEmailSectionImage} source={require("../images/sendEmailIcon.png")}/>

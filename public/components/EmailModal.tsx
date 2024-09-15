@@ -9,12 +9,13 @@ import Button from './Button';
 
 type EmailModalProps = PropsWithChildren<{
     pillHistory: SessionDate[];
+    filteredPillHistory: SessionDate[]
     show: boolean;
     close: Function;
     markEmailsAsSent: Function;
 }>;
 
-const EmailModal = ({pillHistory, show, close, markEmailsAsSent}: EmailModalProps) => {
+const EmailModal = ({pillHistory, filteredPillHistory, show, close, markEmailsAsSent}: EmailModalProps) => {
     const [emailEditable, setEmailEditable] = useState<boolean>(false)
     const emailEdit = useRef<TextInput>(null)
     const [userEmail, setUserEmail] = useMMKVStorage<string>('userEmail', storage, '')
@@ -60,6 +61,8 @@ const EmailModal = ({pillHistory, show, close, markEmailsAsSent}: EmailModalProp
                     return shouldBeInSendable
                 })
                 break;
+            case (2):
+                sendablePillHistory = filteredPillHistory
             default:
         }
         // pillHistory.filter((sessionDate) => !sessionDate.dateEmailed)
@@ -108,7 +111,7 @@ const EmailModal = ({pillHistory, show, close, markEmailsAsSent}: EmailModalProp
                         />
                     </View>
                     <View style={styles.radios}>
-                        {[0,1].map((index) => {
+                        {[0,1,2].map((index) => {
                             return (
                                 <View style={styles.radioOption} key={index}>
                                     <TouchableOpacity onPress={() => setRadioSelection(index)}>
@@ -123,6 +126,7 @@ const EmailModal = ({pillHistory, show, close, markEmailsAsSent}: EmailModalProp
                                     <Text style={styles.radioText}>{[
                                         'Send All Pill History',
                                         'Send Last 30 Days',
+                                        'Send Filtered Pill History'
                                         // 'Send all Unsent'
                                     ][index]}</Text>
                                 </View>
