@@ -11,9 +11,10 @@ type EmailModalProps = PropsWithChildren<{
     pillHistory: SessionDate[];
     show: boolean;
     close: Function;
+    markEmailsAsSent: Function;
 }>;
 
-const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
+const EmailModal = ({pillHistory, show, close, markEmailsAsSent}: EmailModalProps) => {
     const [emailEditable, setEmailEditable] = useState<boolean>(false)
     const emailEdit = useRef<TextInput>(null)
     const [userEmail, setUserEmail] = useMMKVStorage<string>('userEmail', storage, '')
@@ -44,14 +45,24 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
     }, [emailEditable, show])
 
     const sendEmail = () => {
-        const sendablePillHistory = [
-            pillHistory,
-            pillHistory.filter((sessionDate) => {
-                const thirtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 30));
-                return new Date(sessionDate.date) > new Date(thirtyDaysAgo)
-            }),
-            // pillHistory.filter((sessionDate) => !sessionDate.dateEmailed)
-        ][radioSelection]
+        let sendablePillHistory: SessionDate[] = [];
+        const toMarkSent: Number[] = []
+        switch (radioSelection) {
+            case (0):
+                sendablePillHistory = pillHistory
+                pillHistory.forEach((sessionDate, index) => toMarkSent.push(index))
+                break;
+            case (1):
+                sendablePillHistory = pillHistory.filter((sessionDate, index) => {
+                    const thirtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 30));
+                    const shouldBeInSendable = new Date(sessionDate.date) > new Date(thirtyDaysAgo)
+                    if(shouldBeInSendable) toMarkSent.push(index)
+                    return shouldBeInSendable
+                })
+                break;
+            default:
+        }
+        // pillHistory.filter((sessionDate) => !sessionDate.dateEmailed)
         setSendEmailButtonDisabled(true)
         emailjs.send(
             REACT_APP_EMAIL_SERVICE_ID,
@@ -64,6 +75,7 @@ const EmailModal = ({pillHistory, show, close}: EmailModalProps) => {
           )
             .then((response) => {
                 console.log('SUCCESS!', response.status, response.text);
+                markEmailsAsSent(toMarkSent)
                 setEmailConfirmation(true)
             })
             .catch((err) => {

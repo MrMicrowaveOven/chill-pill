@@ -11,9 +11,10 @@ type PillHistoryProps = PropsWithChildren<{
     historyIsReverse: boolean;
     reverseHistory: Function;
     pillList: Pill[];
+    markEmailsAsSent: Function;
 }>;
 
-const PillHistory = ({pillHistory, historyIsReverse, reverseHistory, pillList}: PillHistoryProps) => {
+const PillHistory = ({pillHistory, historyIsReverse, reverseHistory, pillList, markEmailsAsSent}: PillHistoryProps) => {
     const [filterOptionsOpen, setFilterOptionsOpen] = useState<boolean>(false)
     const [filterPickerOpen, setFilterPickerOpen] = useState<boolean>(false)
     const [pills, setPills] = useState(pillList.map((pill, index) => {
@@ -104,6 +105,7 @@ const PillHistory = ({pillHistory, historyIsReverse, reverseHistory, pillList}: 
                 show={emailSectionOpen}
                 close={() => setEmailSectionOpen(false)}
                 pillHistory={pillHistory}
+                markEmailsAsSent={(toMarkSent: number[]) => markEmailsAsSent(toMarkSent)}
             />
             <TouchableOpacity onPress={() => setEmailSectionOpen(true)} style={styles.openEmailSectionButton}>
                 <Image style={styles.openEmailSectionImage} source={require("../images/sendEmailIcon.png")}/>

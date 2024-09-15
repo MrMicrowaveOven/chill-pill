@@ -189,6 +189,15 @@ function App(): React.JSX.Element {
     setPillHistory([])
   }
 
+  const markEmailsAsSent = (toMarkSent: number[]) => {
+    const oldPillHistory = pillHistory
+    const today = new Date()
+    toMarkSent.forEach(indexToMarkSent => {
+      oldPillHistory[indexToMarkSent].dateEmailed = today
+    })
+    setPillHistory(oldPillHistory)
+  }
+
   return (
     <SafeAreaView style={styles.app}>
       <TouchableOpacity
@@ -244,6 +253,7 @@ function App(): React.JSX.Element {
           historyIsReverse={historyIsReverse}
           reverseHistory={() => setHistoryIsReverse(!historyIsReverse)}
           pillList={pills}
+          markEmailsAsSent={(toMarkSent: number[]) => markEmailsAsSent(toMarkSent)}
         />
       </PillModal>
       <TouchableOpacity onPress={() => setSettingsWindowOpen(true)} style={styles.settingsWindowOpen}>
