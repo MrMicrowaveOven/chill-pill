@@ -106,7 +106,7 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
                             textStyle={{fontSize: 20}}
                         />
                     </View>
-                    <Text style={styles.xText}>X</Text>
+                    <Text style={styles.xText} allowFontScaling={false}>X</Text>
                     <View style={styles.quantityPicker}>
                         <DropDownPicker
                             open={openQ}
