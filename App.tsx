@@ -54,6 +54,9 @@ function App(): React.JSX.Element {
     } else {
       const newPills = sortPills(oldPills.concat([pill]))
       setPills(newPills)
+
+      sayPills([pill])
+
       setPillAdderOpen(false)
       if(newPills.length === oldPills.length + 1) {
         showMessage({
@@ -96,6 +99,7 @@ function App(): React.JSX.Element {
     setPillHistory(newPillHistory)
     setPillTakerOpen(false)
     if(newPillHistory.length === oldPillHistory.length + 1) {
+      sayDoses(session)
       const messageArray = session.map((dose) => {
         return(`${dose.pill.name} ${dose.pill.dosage}${dose.pill.unit} x ${dose.quantity}`)
       })
@@ -140,6 +144,25 @@ function App(): React.JSX.Element {
     const oldPills = pills
     const newPills = oldPills.filter((pill, index) => index !== indexToDelete)
     setPills(newPills)
+  }
+
+  const sayPills = (pills: Pill[]) => {
+    pills.forEach(pill => sayPill(pill))
+  }
+
+  const sayDoses = (doses: Dose[]) => {
+    doses.forEach(dose => {
+      sayPill(dose.pill)
+      sayQuantity(dose.quantity)
+    })
+  }
+
+  const sayPill = (pill: Pill) => {
+
+  }
+
+  const sayQuantity = (quantity: number) => {
+
   }
 
   const restorePill = (indexToRestore: number) => {
