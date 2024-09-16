@@ -67,8 +67,8 @@ const SettingsWindow = ({isVisible, exit, newStyle, setNewStyle, historyIsRevers
                             />
                             <SettingsCheckbox
                                 title='Play Sound'
-                                leftLabel='On'
-                                rightLabel='Off'
+                                leftLabel='Off'
+                                rightLabel='On'
                                 onChange={(isChecked: boolean) => setPlaySounds(isChecked)}
                                 defaultChecked={playSounds}
                             />
