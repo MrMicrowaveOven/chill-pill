@@ -17,6 +17,7 @@ const storage = new MMKVLoader().initialize();
 import { Pill, Dose, SessionDate } from './public/types'
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import SettingsWindow from './public/components/SettingsWindow';
+import Tts from 'react-native-tts';
 
 function App(): React.JSX.Element {
   const [pills, setPills] = useMMKVStorage<Pill[]>('pills', storage, [])
@@ -158,11 +159,15 @@ function App(): React.JSX.Element {
   }
 
   const sayPill = (pill: Pill) => {
-
+    Tts.getInitStatus().then(() => {
+      Tts.speak(`${pill.name} ${pill.dosage} ${pill.unit === 'mg' && 'milligrams'}`);
+    });
   }
 
   const sayQuantity = (quantity: number) => {
-
+    Tts.getInitStatus().then(() => {
+      Tts.speak(`${quantity} pills`);
+    });
   }
 
   const restorePill = (indexToRestore: number) => {

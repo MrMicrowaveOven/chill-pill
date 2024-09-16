@@ -113,7 +113,7 @@ const EmailModal = ({pillHistory, filteredPillHistory, show, close, markEmailsAs
                     <View style={styles.radios}>
                         {[0,1,2].map((index) => {
                             return (
-                                <TouchableOpacity style={styles.radioButton} onPress={() => setRadioSelection(index)}>
+                                <TouchableOpacity style={styles.radioButton} onPress={() => setRadioSelection(index)} key={index}>
                                     <View style={styles.radioOption} key={index}>
                                         <Image
                                             style={styles.radioButtonIcon}
