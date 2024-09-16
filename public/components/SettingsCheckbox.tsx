@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     },
     optionTitle: {
         textAlign: 'center',
-        margin: 20,
+        margin: 10,
         fontSize: 26,
         color: 'black',
         textDecorationLine: 'underline'

@@ -30,6 +30,7 @@ function App(): React.JSX.Element {
   const [historyTrash, setHistoryTrash] = useMMKVStorage<SessionDate[][]>('historyTrash', storage, [])
   const [historyIsReverse, setHistoryIsReverse] = useMMKVStorage<boolean>('historyIsReverse', storage, false)
   const [newStyle, setNewStyle] = useMMKVStorage<boolean>('newStyle', storage, false)
+  const [playSounds, setPlaySounds] = useMMKVStorage<boolean>('playSounds', storage, true)
   const [settingsWindowOpen, setSettingsWindowOpen] = useState(false)
 
   // setPills([])
@@ -56,7 +57,7 @@ function App(): React.JSX.Element {
       const newPills = sortPills(oldPills.concat([pill]))
       setPills(newPills)
 
-      sayPills([pill])
+      if (playSounds) sayPills([pill])
 
       setPillAdderOpen(false)
       if(newPills.length === oldPills.length + 1) {
@@ -100,7 +101,7 @@ function App(): React.JSX.Element {
     setPillHistory(newPillHistory)
     setPillTakerOpen(false)
     if(newPillHistory.length === oldPillHistory.length + 1) {
-      sayDoses(session)
+      if(playSounds) sayDoses(session)
       const messageArray = session.map((dose) => {
         return(`${dose.pill.name} ${dose.pill.dosage}${dose.pill.unit} x ${dose.quantity}`)
       })
@@ -295,6 +296,8 @@ function App(): React.JSX.Element {
         historyIsReverse={historyIsReverse}
         setHistoryIsReverse={(historyIsReverse: boolean) => setHistoryIsReverse(historyIsReverse)}
         resetHistory={() => clearPillHistory()}
+        playSounds={playSounds}
+        setPlaySounds={(isPlaySounds: boolean) => setPlaySounds(isPlaySounds)}
       />
       <FlashMessage position={'center'} />
     </SafeAreaView>

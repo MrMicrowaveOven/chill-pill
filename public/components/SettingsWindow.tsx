@@ -11,9 +11,11 @@ type SettingsWindowProps = PropsWithChildren<{
     historyIsReverse: boolean;
     setHistoryIsReverse: Function;
     resetHistory: Function;
+    playSounds: boolean;
+    setPlaySounds: Function;
 }>;
 
-const SettingsWindow = ({isVisible, exit, newStyle, setNewStyle, historyIsReverse, setHistoryIsReverse, resetHistory}: SettingsWindowProps) => {
+const SettingsWindow = ({isVisible, exit, newStyle, setNewStyle, historyIsReverse, setHistoryIsReverse, resetHistory, playSounds, setPlaySounds}: SettingsWindowProps) => {
     const ExitButton = () =>
         <TouchableOpacity style={styles.exitButton} onPress={() => exit()}>
             <Image source={require('../images/exit.png')} style={styles.exitButtonIcon}/>
@@ -63,6 +65,13 @@ const SettingsWindow = ({isVisible, exit, newStyle, setNewStyle, historyIsRevers
                                 onChange={(isChecked: boolean) => setHistoryIsReverse(isChecked)}
                                 defaultChecked={historyIsReverse}
                             />
+                            <SettingsCheckbox
+                                title='Play Sound'
+                                leftLabel='On'
+                                rightLabel='Off'
+                                onChange={(isChecked: boolean) => setPlaySounds(isChecked)}
+                                defaultChecked={playSounds}
+                            />
                             <View style={styles.clearPillHistory}>
                                 <Button title={'Clear Pill History'} onPress={() => confirmClearHistory()}/>
                             </View>
@@ -83,7 +92,7 @@ const styles = StyleSheet.create({
     },
     modal: {
         width: "90%",
-        height: 455,
+        height: 525,
         backgroundColor: "white",
         borderColor: "black",
         borderWidth: 2,
@@ -91,7 +100,7 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         width: "100%",
-        height: 64,
+        height: 80,
         display: "flex",
         flexDirection: "column",
         alignItems: "center"
