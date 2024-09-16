@@ -17,7 +17,6 @@ const storage = new MMKVLoader().initialize();
 import { Pill, Dose, SessionDate } from './public/types'
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import SettingsWindow from './public/components/SettingsWindow';
-import Tts from 'react-native-tts';
 import { sayDoses, sayPills } from './public/components/SpeakModule';
 
 function App(): React.JSX.Element {
@@ -68,14 +67,8 @@ function App(): React.JSX.Element {
           type: 'warning',
           duration: 5000,
           animationDuration: 400,
-          titleStyle: {
-            fontSize: 20,
-            color: 'black',
-          },
-          textStyle: {
-            fontSize: 18,
-            color: 'black'
-          }
+          titleStyle: { fontSize: 20, color: 'black' },
+          textStyle: { fontSize: 18, color: 'black' }
         })
       } else {
         showMessage({
@@ -113,14 +106,8 @@ function App(): React.JSX.Element {
         type: 'warning',
         duration: 5000,
         animationDuration: 400,
-        titleStyle: {
-          fontSize: 20,
-          color: 'black',
-        },
-        textStyle: {
-          fontSize: 18,
-          color: 'black'
-        }
+        titleStyle: { fontSize: 20, color: 'black' },
+        textStyle: { fontSize: 18, color: 'black' }
       })
     } else {
       showMessage({
