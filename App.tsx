@@ -167,7 +167,7 @@ function App(): React.JSX.Element {
 
   const sayQuantity = (quantity: number) => {
     Tts.getInitStatus().then(() => {
-      Tts.speak(`${quantity} pills`);
+      Tts.speak(`${quantity} ${quantity === 1 ? 'pill' : 'pills'}`);
     });
   }
 
