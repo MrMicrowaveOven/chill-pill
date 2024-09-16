@@ -18,6 +18,7 @@ import { Pill, Dose, SessionDate } from './public/types'
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import SettingsWindow from './public/components/SettingsWindow';
 import Tts from 'react-native-tts';
+import { sayDoses, sayPills } from './public/components/SpeakModule';
 
 function App(): React.JSX.Element {
   const [pills, setPills] = useMMKVStorage<Pill[]>('pills', storage, [])
@@ -146,29 +147,6 @@ function App(): React.JSX.Element {
     const oldPills = pills
     const newPills = oldPills.filter((pill, index) => index !== indexToDelete)
     setPills(newPills)
-  }
-
-  const sayPills = (pills: Pill[]) => {
-    pills.forEach(pill => sayPill(pill))
-  }
-
-  const sayDoses = (doses: Dose[]) => {
-    doses.forEach(dose => {
-      sayPill(dose.pill)
-      sayQuantity(dose.quantity)
-    })
-  }
-
-  const sayPill = (pill: Pill) => {
-    Tts.getInitStatus().then(() => {
-      Tts.speak(`${pill.name} ${pill.dosage} ${pill.unit === 'mg' && 'milligrams'}`);
-    });
-  }
-
-  const sayQuantity = (quantity: number) => {
-    Tts.getInitStatus().then(() => {
-      Tts.speak(`${quantity} ${quantity === 1 ? 'pill' : 'pills'}`);
-    });
   }
 
   const restorePill = (indexToRestore: number) => {
