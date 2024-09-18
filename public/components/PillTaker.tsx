@@ -152,7 +152,7 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
                         <View style={styles.noteInputHeading}>
                         <Text style={styles.noteInputLabel}>Note:</Text>
                         <TouchableWithoutFeedback onPress={() => setNoteOpen(false)}>
-                            <Text>✖</Text>
+                            <Text style={styles.closeNoteButton}>✖</Text>
                         </TouchableWithoutFeedback>
                         </View>
                         <View style={styles.noteInputText}>
@@ -254,6 +254,9 @@ const styles = StyleSheet.create({
     },
     addNoteButtonText: {
         color: 'blue'
+    },
+    closeNoteButton: {
+        color: 'black'
     },
     noteInput: {
         position: 'absolute',
