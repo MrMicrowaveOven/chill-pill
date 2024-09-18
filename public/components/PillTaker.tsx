@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import Button from "./Button";
 import type {PropsWithChildren} from 'react';
 import DropDownPicker from "react-native-dropdown-picker";
@@ -27,6 +27,8 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
     const [itemsQ, setItemsQ] = useState(QUANTITY_LIST)
 
     const [pillSession, setPillSession] = useState<Dose[]>([])
+
+    const [noteOpen, setNoteOpen] = useState<boolean>(false)
     const [sessionNote, setSessionNote] = useState<string>('')
 
     const addPillsToSession = (pill: Pill, quantity: number) => {
@@ -140,22 +142,34 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
                         )
                     })}
                 </View>
-                <View style={styles.noteInput}>
-                    <Text style={styles.noteInputLabel}>Note:</Text>
-                    <View style={styles.noteInputText}>
-                        <View style={styles.noteInputTextBorder}>
-                            <TextInput
-                                style={styles.noteInputText}
-                                onChangeText={(note) => setSessionNote(note)}
-                            />
+                {!noteOpen &&
+                    <TouchableOpacity style={styles.addNoteButton} onPress={() => setNoteOpen(true)}>
+                        <Text style={styles.addNoteButtonText}>Add Note</Text>
+                    </TouchableOpacity>
+                }
+                {noteOpen &&
+                    <View style={styles.noteInput}>
+                        <View style={styles.noteInputHeading}>
+                        <Text style={styles.noteInputLabel}>Note:</Text>
+                        <TouchableWithoutFeedback onPress={() => setNoteOpen(false)}>
+                            <Text>✖</Text>
+                        </TouchableWithoutFeedback>
+                        </View>
+                        <View style={styles.noteInputText}>
+                            <View style={styles.noteInputTextBorder}>
+                                <TextInput
+                                    style={styles.noteInputText}
+                                    onChangeText={(note) => setSessionNote(note)}
+                                />
+                            </View>
                         </View>
                     </View>
-                </View>
+                }
                 <View style={styles.takePillsButton}>
                     <Button
                         title="Take Pills"
                         color="lightskyblue"
-                        onPress={() => takePills(pillSession, sessionNote)}
+                        onPress={() => takePills(pillSession, noteOpen ? sessionNote : '')}
                         disabled={pillSession.length === 0}
                         width={300}
                     />
@@ -209,7 +223,7 @@ const styles = StyleSheet.create({
         width: "20%"
     },
     pillSession: {
-        height: "40%",
+        height: "60%",
         margin: 10,
     },
     sessionDose: {
@@ -233,11 +247,26 @@ const styles = StyleSheet.create({
         alignItems: "center",
         margin: 15
     },
+    addNoteButton: {
+        position: 'absolute',
+        bottom: 75,
+        left: 20,
+    },
+    addNoteButtonText: {
+        color: 'blue'
+    },
     noteInput: {
         position: 'absolute',
         bottom: 80,
         flex: 1,
         width: '90%'
+    },
+    noteInputHeading: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginHorizontal: 5,
     },
     noteInputLabel: {
         color: "black",
