@@ -4,18 +4,14 @@ export type Pill = {
     unit: string;
 }
 
-export type PillSwallow = {
-    pill: Pill,
-    date: Date;
+export type Dose = {
+    pill: Pill;
+    quantity: number;
 }
 
 export type SessionDate = {
     date: Date;
     session: Dose[];
+    note: string;
     dateEmailed?: Date;
-}
-
-export type Dose = {
-    pill: Pill;
-    quantity: number;
 }

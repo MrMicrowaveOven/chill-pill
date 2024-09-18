@@ -80,9 +80,10 @@ function App(): React.JSX.Element {
     }
   }
 
-  const takePills = (session: Dose[]) => {
+  const takePills = (session: Dose[], note: string) => {
     const pillSwallow = {
       session: session,
+      note: note,
       date: new Date()
     }
     const oldPillHistory = pillHistory
@@ -227,7 +228,7 @@ function App(): React.JSX.Element {
       <PillModal isVisible={pillTakerOpen} closeWindow={() => setPillTakerOpen(false)} name={"Take a Pill"}>
         <PillTaker
           pills={pills}
-          takePills={(session: Dose[]) => takePills(session)}
+          takePills={(session: Dose[], note: string) => takePills(session, note)}
           switchToPillAdder={() => switchToPillAdder()}
         />
       </PillModal>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Button from "./Button";
 import type {PropsWithChildren} from 'react';
 import DropDownPicker from "react-native-dropdown-picker";
@@ -27,6 +27,7 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
     const [itemsQ, setItemsQ] = useState(QUANTITY_LIST)
 
     const [pillSession, setPillSession] = useState<Dose[]>([])
+    const [sessionNote, setSessionNote] = useState<string>('')
 
     const addPillsToSession = (pill: Pill, quantity: number) => {
         const oldSession = pillSession
@@ -139,11 +140,22 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
                         )
                     })}
                 </View>
+                <View style={styles.noteInput}>
+                    <Text style={styles.noteInputLabel}>Note:</Text>
+                    <View style={styles.noteInputText}>
+                        <View style={styles.noteInputTextBorder}>
+                            <TextInput
+                                style={styles.noteInputText}
+                                onChangeText={(note) => setSessionNote(note)}
+                            />
+                        </View>
+                    </View>
+                </View>
                 <View style={styles.takePillsButton}>
                     <Button
                         title="Take Pills"
                         color="lightskyblue"
-                        onPress={() => takePills(pillSession)}
+                        onPress={() => takePills(pillSession, sessionNote)}
                         disabled={pillSession.length === 0}
                         width={300}
                     />
@@ -220,6 +232,26 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         margin: 15
+    },
+    noteInput: {
+        position: 'absolute',
+        bottom: 80,
+        flex: 1,
+        width: '90%'
+    },
+    noteInputLabel: {
+        color: "black",
+        fontSize: 20,
+    },
+    noteInputText: {
+        fontSize: 20,
+        backgroundColor: "white",
+        color: 'black',
+    },
+    noteInputTextBorder: {
+        borderColor: "black",
+        borderWidth: 1,
+        borderStyle: "solid",
     },
     takePillsButton: {
         position: "absolute",

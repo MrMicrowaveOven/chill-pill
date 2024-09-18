@@ -81,11 +81,12 @@ const PillHistory = ({pillHistory, historyIsReverse, reverseHistory, pillList, m
                 <ScrollView style={[styles.historyScroll, filterOptionsOpen && {marginTop: 70}]}>
                     <Text selectable={true}>
                     {pillHistoryDisplay.map((sessionDate: SessionDate, index) => {
-                        const { session } = sessionDate
+                        const { session, note } = sessionDate
                         const date = new Date(sessionDate.date)
                         return (
                             <Text style={styles.session} key={index}>
                                 <Text style={styles.dateText}>{date.toDateString()}, {date.toLocaleTimeString()}{"\n"}</Text>
+                                {note && <Text style={styles.noteText}>{note}{"\n"}</Text>}
                                 {session.map(((swallow, index) => {
                                     return(
                                         <Text style={styles.dose} key={index}>{"\t\t"}{swallow.pill.name}, {swallow.pill.dosage}{swallow.pill.unit} X {swallow.quantity}{"\n"}</Text>
@@ -171,6 +172,10 @@ const styles = StyleSheet.create({
     dateText: {
         color: "black",
         fontSize: 20
+    },
+    noteText: {
+        color: 'black',
+        fontSize: 15,
     },
     openEmailSectionButton: {
         position: 'absolute',
