@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import Button from "./Button";
 import type {PropsWithChildren} from 'react';
 import DropDownPicker from "react-native-dropdown-picker";
@@ -84,6 +84,25 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
         return newSession
     }
 
+    const confirmCloseNote = () => {
+        Alert.alert(
+            'Confirm Close Note',
+            'Closing the note window will delete the note.  Would you like to delete your note?',
+            [
+                {
+                    text: 'No, keep note open',
+                    style: 'cancel'
+                },
+                {
+                    text: 'Yes, delete the note',
+                    onPress: () => {
+                        setNoteOpen(false)
+                    }
+                }
+            ]
+        );
+    }
+
     return (
         <View style={[styles.window, pills.length > 0 && {paddingTop: 150}]}>
             {pills.length === 0 &&
@@ -151,7 +170,7 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
                     <View style={styles.noteInput}>
                         <View style={styles.noteInputHeading}>
                         <Text style={styles.noteInputLabel}>Note:</Text>
-                        <TouchableWithoutFeedback onPress={() => setNoteOpen(false)}>
+                        <TouchableWithoutFeedback onPress={() => sessionNote ? confirmCloseNote() : setNoteOpen(false)}>
                             <Text style={styles.closeNoteButton}>✖</Text>
                         </TouchableWithoutFeedback>
                         </View>
