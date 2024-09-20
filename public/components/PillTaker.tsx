@@ -3,6 +3,7 @@ import { Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableW
 import Button from "./Button";
 import type {PropsWithChildren} from 'react';
 import DropDownPicker from "react-native-dropdown-picker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Pill, Dose } from '../types'
 
 type PillTakerProps = PropsWithChildren<{
@@ -30,6 +31,9 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
 
     const [noteOpen, setNoteOpen] = useState<boolean>(false)
     const [sessionNote, setSessionNote] = useState<string>('')
+
+    const [dateOpen, setDateOpen] = useState<boolean>(false)
+    const [sessionDate, setSessionDate] = useState<Date|undefined>(undefined)
 
     const addPillsToSession = (pill: Pill, quantity: number) => {
         const oldSession = pillSession
@@ -184,6 +188,23 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
                         </View>
                     </View>
                 }
+                {sessionDate
+                    ?
+                        <TouchableOpacity onPress={() => setDateOpen(true)} style={styles.addTimeButton}>
+                            <Text style={styles.addTimeButtonText}>{`${sessionDate.toDateString()}, ${sessionDate.toLocaleTimeString()}`}</Text>
+                        </TouchableOpacity>
+                    :
+                        <TouchableOpacity onPress={() => setDateOpen(true)} style={styles.addTimeButton}>
+                            <Text style={styles.addTimeButtonText}>Add Time</Text>
+                        </TouchableOpacity>
+                }
+                <DateTimePickerModal
+                    isVisible={dateOpen}
+                    mode='datetime'
+                    onConfirm={(date) => {setSessionDate(date); setDateOpen(false);}}
+                    onCancel={() => setDateOpen(false)}
+                    date={sessionDate}
+                />
                 <View style={styles.takePillsButton}>
                     <Button
                         title="Take Pills"
@@ -303,6 +324,14 @@ const styles = StyleSheet.create({
         borderColor: "black",
         borderWidth: 1,
         borderStyle: "solid",
+    },
+    addTimeButton: {
+        position: 'absolute',
+        bottom: 75,
+        right: 20,
+    },
+    addTimeButtonText: {
+        color: 'blue'
     },
     takePillsButton: {
         position: "absolute",
