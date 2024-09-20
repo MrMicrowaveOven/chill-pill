@@ -82,8 +82,8 @@ android {
         applicationId "com.chillpill"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 39
-        versionName "1.38"
+        versionCode 41
+        versionName "1.40"
     }
     signingConfigs {
         debug {
