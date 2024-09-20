@@ -190,13 +190,19 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
                 }
                 {sessionDate
                     ?
-                        <TouchableOpacity onPress={() => setDateOpen(true)} style={styles.addTimeButton}>
-                            <Text style={styles.addTimeButtonText}>{`${sessionDate.toDateString()}, ${sessionDate.toLocaleTimeString()}`}</Text>
-                        </TouchableOpacity>
+                        <View style={[styles.addTimeSection, noteOpen ? {bottom: 175} : {bottom: 75}]}>
+                            <TouchableOpacity onPress={() => setDateOpen(true)}>
+                                <Text style={styles.addTimeButtonText}>{`${sessionDate.toDateString()}, ${sessionDate.toLocaleTimeString()}`}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => setSessionDate(undefined)}>
+                                <Image style={styles.deleteDateButtonIcon} source={require('../images/delete.png')}/>
+                            </TouchableOpacity>
+                        </View>
                     :
-                        <TouchableOpacity onPress={() => setDateOpen(true)} style={styles.addTimeButton}>
+                        <TouchableOpacity onPress={() => setDateOpen(true)} style={[styles.addTimeButton, noteOpen ? {bottom: 175} : {bottom: 75}]}>
                             <Text style={styles.addTimeButtonText}>Add Time</Text>
                         </TouchableOpacity>
+
                 }
                 <DateTimePickerModal
                     isVisible={dateOpen}
@@ -325,13 +331,25 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderStyle: "solid",
     },
+    addTimeSection: {
+        position: 'absolute',
+        right: 20,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     addTimeButton: {
         position: 'absolute',
-        bottom: 75,
         right: 20,
     },
     addTimeButtonText: {
         color: 'blue'
+    },
+    deleteDateButtonIcon: {
+        height: 20,
+        width: 20,
+        marginLeft: 10,
     },
     takePillsButton: {
         position: "absolute",
