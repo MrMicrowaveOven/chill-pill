@@ -81,11 +81,12 @@ const PillHistory = ({pillHistory, historyIsReverse, reverseHistory, pillList, m
                 <ScrollView style={[styles.historyScroll, filterOptionsOpen && {marginTop: 70}]}>
                     <Text selectable={true}>
                     {pillHistoryDisplay.map((sessionDate: SessionDate, index) => {
-                        const { session, note } = sessionDate
+                        const { session, note, userDate } = sessionDate
                         const date = new Date(sessionDate.date)
                         return (
                             <Text style={styles.session} key={index}>
                                 <Text style={styles.dateText}>{date.toDateString()}, {date.toLocaleTimeString()}{"\n"}</Text>
+                                {userDate && <Text style={styles.noteText}>Date Taken: {userDate.toDateString()}, {userDate.toLocaleTimeString()}{"\n"}</Text>}
                                 {note && <Text style={styles.noteText}>{note}{"\n"}</Text>}
                                 {session.map(((swallow, index) => {
                                     return(
