@@ -14,4 +14,5 @@ export type SessionDate = {
     session: Dose[];
     note: string;
     dateEmailed?: Date;
+    userDate: Date;
 }
