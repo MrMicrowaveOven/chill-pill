@@ -89,7 +89,7 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
         return newSession
     }
 
-    const confirmTakePills = (pillSession: Dose[], sessionNote: string, sessionDate: Date) => {
+    const confirmTakePills = (pillSession: Dose[], sessionNote: string, sessionDate?: Date) => {
         pillSession.length > 0
             ?   takePills(pillSession, sessionNote, sessionDate)
             :   confirmation(
