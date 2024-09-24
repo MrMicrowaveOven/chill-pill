@@ -89,6 +89,18 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
         return newSession
     }
 
+    const confirmTakePills = (pillSession: Dose[], sessionNote: string, sessionDate: Date) => {
+        pillSession.length > 0
+            ?   takePills(pillSession, sessionNote, sessionDate)
+            :   confirmation(
+                    'Confirmation',
+                    'No pills added.  Add Note Anyway?',
+                    'Cancel',
+                    'Add Note without Pills',
+                    () => takePills(pillSession, sessionNote, sessionDate)
+                )
+    }
+
     const confirmCloseNote = () => {
         confirmation(
             'Confirm Close Note',
@@ -207,7 +219,7 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
                     <Button
                         title="Take Pills"
                         color="lightskyblue"
-                        onPress={() => takePills(pillSession, sessionNote, sessionDate)}
+                        onPress={() => confirmTakePills(pillSession, sessionNote, sessionDate)}
                         disabled={pillSession.length === 0 && !sessionNote}
                         width={300}
                     />
