@@ -207,7 +207,7 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
                     <Button
                         title="Take Pills"
                         color="lightskyblue"
-                        onPress={() => takePills(pillSession, noteOpen ? sessionNote : '', sessionDate)}
+                        onPress={() => takePills(pillSession, sessionNote, sessionDate)}
                         disabled={pillSession.length === 0 && !sessionNote}
                         width={300}
                     />
