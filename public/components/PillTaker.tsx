@@ -95,7 +95,7 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
             'Closing the note window will delete the note.  Would you like to delete your note?',
             'No, keep note open',
             'Yes, delete the note',
-            () => setNoteOpen(false)
+            () => {setNoteOpen(false); setSessionNote('')}
         )
     }
 
@@ -208,7 +208,7 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
                         title="Take Pills"
                         color="lightskyblue"
                         onPress={() => takePills(pillSession, noteOpen ? sessionNote : '', sessionDate)}
-                        disabled={pillSession.length === 0}
+                        disabled={pillSession.length === 0 && !sessionNote}
                         width={300}
                     />
                 </View>
