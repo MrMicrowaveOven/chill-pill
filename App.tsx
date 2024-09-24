@@ -18,6 +18,7 @@ import { Pill, Dose, SessionDate } from './public/types'
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import SettingsWindow from './public/components/SettingsWindow';
 import { sayDoses, sayPills } from './public/components/SpeakModule';
+import confirmation from './public/components/confirmation';
 
 function App(): React.JSX.Element {
   const [pills, setPills] = useMMKVStorage<Pill[]>('pills', storage, [])
@@ -149,13 +150,12 @@ function App(): React.JSX.Element {
   }
 
   const emptyTrash = () => {
-    Alert.alert(
+    confirmation(
       'Empty Trash',
       'Are you sure you want to empty your trash?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'OK', onPress: () => { setPillTrash([]) } }
-      ]
+      'cancel',
+      'OK',
+      () => setPillTrash([])
     );
   }
 

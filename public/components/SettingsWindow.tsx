@@ -1,7 +1,8 @@
 import React, { PropsWithChildren } from 'react'
-import { Alert, Image, Modal, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import SettingsCheckbox from './SettingsCheckbox';
 import Button from './Button';
+import confirmation from './confirmation';
 
 type SettingsWindowProps = PropsWithChildren<{
     isVisible: boolean;
@@ -22,22 +23,13 @@ const SettingsWindow = ({isVisible, exit, newStyle, setNewStyle, historyIsRevers
         </TouchableOpacity>
     
     const confirmClearHistory = () => {
-        Alert.alert(
+        confirmation(
             'Confirm Clear Pill History',
             'Are you sure you want to clear your entire Pill History? This action cannot be undone.',
-            [
-              {
-                text: 'Cancel',
-                style: 'cancel'
-              },
-              {
-                text: 'Confirm',
-                onPress: () => {
-                  resetHistory()
-                }
-              }
-            ]
-          );
+            'Cancel',
+            'Confirm',
+            () => resetHistory()
+        );
     }
     return(
         <Modal visible={isVisible} transparent={true} animationType="fade">

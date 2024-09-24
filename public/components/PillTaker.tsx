@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import Button from "./Button";
 import type {PropsWithChildren} from 'react';
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Pill, Dose } from '../types'
+import confirmation from "./confirmation";
 
 type PillTakerProps = PropsWithChildren<{
     pills: Pill[];
@@ -89,22 +90,13 @@ const PillTaker = ({pills, takePills, switchToPillAdder}: PillTakerProps) => {
     }
 
     const confirmCloseNote = () => {
-        Alert.alert(
+        confirmation(
             'Confirm Close Note',
             'Closing the note window will delete the note.  Would you like to delete your note?',
-            [
-                {
-                    text: 'No, keep note open',
-                    style: 'cancel'
-                },
-                {
-                    text: 'Yes, delete the note',
-                    onPress: () => {
-                        setNoteOpen(false)
-                    }
-                }
-            ]
-        );
+            'No, keep note open',
+            'Yes, delete the note',
+            () => setNoteOpen(false)
+        )
     }
 
     return (
